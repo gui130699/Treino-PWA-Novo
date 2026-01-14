@@ -76,9 +76,9 @@ document.getElementById('cadastroForm').addEventListener('submit', async functio
     }
     
     // Verificar se o Supabase está carregado
-    if (!window.supabase) {
-        alert('Aguarde o carregamento do sistema...');
-        setTimeout(() => location.reload(), 1000);
+    if (!window.supabase || !window.supabase.from) {
+        alert('Sistema ainda carregando... Aguarde e tente novamente.');
+        console.error('Supabase não inicializado:', window.supabase);
         return;
     }
     
@@ -100,12 +100,12 @@ document.getElementById('cadastroForm').addEventListener('submit', async functio
     }
     
     console.log('📝 Dados do cadastro:', dados);
-    console.log('🔌 Supabase cliente:', supabase);
+    console.log('🔌 Supabase cliente:', window.supabase);
     
     try {
         // Verificar se email já existe
         console.log('🔍 Verificando email existente...');
-        const { data: usuarioExistente, error: erroCheck } = await supabase
+        const { data: usuarioExistente, error: erroCheck } = await window.supabase
             .from('usuarios')
             .select('email')
             .eq('email', dados.email)
@@ -122,7 +122,7 @@ document.getElementById('cadastroForm').addEventListener('submit', async functio
         
         // Inserir no Supabase
         console.log('💾 Inserindo usuário no Supabase...');
-        const { data: novoUsuario, error } = await supabase
+        const { data: novoUsuario, error } = await window.supabase
             .from('usuarios')
             .insert([dados])
             .select()

@@ -36,9 +36,15 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
         email: email
     });
     
+    // Verificar se o Supabase está carregado
+    if (!window.supabase || !window.supabase.from) {
+        alert('Sistema ainda carregando... Aguarde e tente novamente.');
+        return;
+    }
+    
     try {
         // Buscar usuário no Supabase
-        const { data: usuario, error } = await supabase
+        const { data: usuario, error } = await window.supabase
             .from('usuarios')
             .select('*')
             .eq('email', email)

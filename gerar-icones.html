@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Gerar Ícones PWA</title>
+</head>
+<body>
+    <h2>Gerando ícones...</h2>
+    <canvas id="canvas192" width="192" height="192" style="display:none;"></canvas>
+    <canvas id="canvas512" width="512" height="512" style="display:none;"></canvas>
+    
+    <script>
+        function criarIcone(canvas, tamanho) {
+            const ctx = canvas.getContext('2d');
+            
+            // Fundo verde
+            ctx.fillStyle = '#4CAF50';
+            ctx.fillRect(0, 0, tamanho, tamanho);
+            
+            // Borda arredondada
+            ctx.globalCompositeOperation = 'destination-in';
+            ctx.beginPath();
+            ctx.roundRect(0, 0, tamanho, tamanho, tamanho * 0.1);
+            ctx.fill();
+            ctx.globalCompositeOperation = 'source-over';
+            
+            // Emoji de haltere
+            ctx.font = `${tamanho * 0.5}px Arial`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('💪', tamanho / 2, tamanho / 2);
+            
+            return canvas.toDataURL('image/png');
+        }
+        
+        // Gerar ícone 192x192
+        const canvas192 = document.getElementById('canvas192');
+        const icon192 = criarIcone(canvas192, 192);
+        
+        // Gerar ícone 512x512
+        const canvas512 = document.getElementById('canvas512');
+        const icon512 = criarIcone(canvas512, 512);
+        
+        // Criar links de download
+        const link192 = document.createElement('a');
+        link192.download = 'icon-192.png';
+        link192.href = icon192;
+        link192.textContent = 'Download icon-192.png';
+        document.body.appendChild(link192);
+        document.body.appendChild(document.createElement('br'));
+        document.body.appendChild(document.createElement('br'));
+        
+        const link512 = document.createElement('a');
+        link512.download = 'icon-512.png';
+        link512.href = icon512;
+        link512.textContent = 'Download icon-512.png';
+        document.body.appendChild(link512);
+        
+        // Auto download
+        setTimeout(() => {
+            link192.click();
+            setTimeout(() => link512.click(), 500);
+        }, 500);
+    </script>
+</body>
+</html>

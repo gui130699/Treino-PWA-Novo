@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste Supabase</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .test-section {
+            background: #f5f5f5;
+            padding: 15px;
+            margin: 10px 0;
+            border-radius: 5px;
+        }
+        .success { color: green; }
+        .error { color: red; }
+        button {
+            background: #4CAF50;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin: 5px;
+        }
+        button:hover { background: #45a049; }
+        pre {
+            background: #fff;
+            padding: 10px;
+            border-radius: 3px;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <h1>🔍 Teste de Conexão Supabase</h1>
+    
+    <div class="test-section">
+        <h3>1. Verificar SDK</h3>
+        <p id="sdkStatus">Verificando...</p>
+    </div>
+    
+    <div class="test-section">
+        <h3>2. Verificar Cliente</h3>
+        <p id="clientStatus">Verificando...</p>
+    </div>
+    
+    <div class="test-section">
+        <h3>3. Testar Conexão com Banco</h3>
+        <button onclick="testarConexao()">Testar Conexão</button>
+        <pre id="conexaoResult"></pre>
+    </div>
+    
+    <div class="test-section">
+        <h3>4. Verificar Tabelas</h3>
+        <button onclick="verificarTabelas()">Verificar Tabelas</button>
+        <pre id="tabelasResult"></pre>
+    </div>
+    
+    <div class="test-section">
+        <h3>5. Inserir Usuário de Teste</h3>
+        <button onclick="inserirUsuarioTeste()">Inserir Usuário</button>
+        <pre id="insertResult"></pre>
+    </div>
+    
+    <div class="test-section">
+        <h3>6. Listar Todos os Usuários</h3>
+        <button onclick="listarUsuarios()">Listar Usuários</button>
+        <pre id="usuariosResult"></pre>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        // Configuração
+        const SUPABASE_URL = 'https://cjzdegocrrjoknrulhnp.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNqemRlZ29jcnJqb2tucnVsaG5wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzY4NTY1NTMsImV4cCI6MjA1MjQzMjU1M30.ydeYdhKoXOR25p62RRmkMQ_rXeY2c9z4xVEi_RdQT3E';
+        
+        let supabase;
+        
+        // Verificar SDK
+        setTimeout(() => {
+            const sdkStatus = document.getElementById('sdkStatus');
+            if (window.supabase) {
+                sdkStatus.innerHTML = '<span class="success">✅ SDK Carregado</span>';
+                sdkStatus.innerHTML += `<br>Versão: ${JSON.stringify(window.supabase)}`;
+                
+                // Criar cliente
+                try {
+                    supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+                    document.getElementById('clientStatus').innerHTML = '<span class="success">✅ Cliente Criado</span>';
+                    console.log('Cliente Supabase:', supabase);
+                } catch (error) {
+                    document.getElementById('clientStatus').innerHTML = `<span class="error">❌ Erro: ${error.message}</span>`;
+                }
+            } else {
+                sdkStatus.innerHTML = '<span class="error">❌ SDK não carregado</span>';
+            }
+        }, 1000);
+        
+        async function testarConexao() {
+            const result = document.getElementById('conexaoResult');
+            result.textContent = 'Testando...';
+            
+            try {
+                const { data, error } = await supabase
+                    .from('usuarios')
+                    .select('count')
+                    .limit(1);
+                
+                if (error) {
+                    result.textContent = `❌ ERRO:\n${JSON.stringify(error, null, 2)}`;
+                } else {
+                    result.textContent = `✅ CONEXÃO OK!\n${JSON.stringify(data, null, 2)}`;
+                }
+            } catch (error) {
+                result.textContent = `❌ EXCEÇÃO:\n${error.message}\n${error.stack}`;
+            }
+        }
+        
+        async function verificarTabelas() {
+            const result = document.getElementById('tabelasResult');
+            result.textContent = 'Verificando...';
+            
+            try {
+                // Tentar ler de várias tabelas
+                const tabelas = ['usuarios', 'vinculos', 'exercicios', 'treinos'];
+                const resultados = {};
+                
+                for (const tabela of tabelas) {
+                    const { data, error } = await supabase
+                        .from(tabela)
+                        .select('*')
+                        .limit(1);
+                    
+                    resultados[tabela] = error ? `❌ ${error.message}` : '✅ OK';
+                }
+                
+                result.textContent = JSON.stringify(resultados, null, 2);
+            } catch (error) {
+                result.textContent = `❌ ERRO: ${error.message}`;
+            }
+        }
+        
+        async function inserirUsuarioTeste() {
+            const result = document.getElementById('insertResult');
+            result.textContent = 'Inserindo...';
+            
+            const usuarioTeste = {
+                nome_completo: 'Teste Sistema',
+                email: `teste_${Date.now()}@teste.com`,
+                senha: '123456',
+                tipo: 'aluno',
+                peso: 70.0,
+                altura: 175.0
+            };
+            
+            console.log('Tentando inserir:', usuarioTeste);
+            
+            try {
+                const { data, error } = await supabase
+                    .from('usuarios')
+                    .insert([usuarioTeste])
+                    .select();
+                
+                if (error) {
+                    result.textContent = `❌ ERRO:\n${JSON.stringify(error, null, 2)}`;
+                    console.error('Erro detalhado:', error);
+                } else {
+                    result.textContent = `✅ SUCESSO!\n${JSON.stringify(data, null, 2)}`;
+                    console.log('Usuário inserido:', data);
+                }
+            } catch (error) {
+                result.textContent = `❌ EXCEÇÃO:\n${error.message}`;
+                console.error('Exceção:', error);
+            }
+        }
+        
+        async function listarUsuarios() {
+            const result = document.getElementById('usuariosResult');
+            result.textContent = 'Listando...';
+            
+            try {
+                const { data, error } = await supabase
+                    .from('usuarios')
+                    .select('*')
+                    .order('created_at', { ascending: false });
+                
+                if (error) {
+                    result.textContent = `❌ ERRO:\n${JSON.stringify(error, null, 2)}`;
+                } else {
+                    result.textContent = `✅ ${data.length} usuário(s) encontrado(s):\n${JSON.stringify(data, null, 2)}`;
+                }
+            } catch (error) {
+                result.textContent = `❌ EXCEÇÃO:\n${error.message}`;
+            }
+        }
+    </script>
+</body>
+</html>
