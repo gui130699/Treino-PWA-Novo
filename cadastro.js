@@ -83,20 +83,27 @@ document.getElementById('cadastroForm').addEventListener('submit', async functio
     }
     
     // Coletar dados do formulário
+    const pesoValue = document.getElementById('peso').value;
+    const alturaValue = document.getElementById('altura').value;
+    const idadeText = document.getElementById('idade').value;
+    
     const dados = {
         tipo: tipoUsuario,
-        nome_completo: document.getElementById('nomeCompleto').value,
+        nome_completo: document.getElementById('nomeCompleto').value.trim(),
         data_nascimento: document.getElementById('dataNascimento').value || null,
-        idade: parseInt(document.getElementById('idade').value) || null,
-        peso: parseFloat(document.getElementById('peso').value) || null,
-        altura: parseFloat(document.getElementById('altura').value) || null,
-        email: document.getElementById('email').value,
+        idade: idadeText ? parseInt(idadeText) : null,
+        peso: pesoValue ? parseFloat(pesoValue) : null,
+        altura: alturaValue ? parseFloat(alturaValue) : null,
+        email: document.getElementById('email').value.trim().toLowerCase(),
         senha: senha
     };
     
     // Se for professor, adicionar CREF
     if (tipoUsuario === 'professor') {
-        dados.cref = document.getElementById('cref').value;
+        const crefValue = document.getElementById('cref').value.trim();
+        if (crefValue) {
+            dados.cref = crefValue;
+        }
     }
     
     console.log('📝 Dados do cadastro:', dados);
@@ -122,6 +129,8 @@ document.getElementById('cadastroForm').addEventListener('submit', async functio
         
         // Inserir no Supabase
         console.log('💾 Inserindo usuário no Supabase...');
+        console.log('📦 Dados a serem enviados:', dados);
+        
         const { data: novoUsuario, error } = await window.supabase
             .from('usuarios')
             .insert([dados])
@@ -130,8 +139,22 @@ document.getElementById('cadastroForm').addEventListener('submit', async functio
         
         if (error) {
             console.error('❌ Erro ao cadastrar:', error);
-            console.error('Detalhes:', error.message, error.details, error.hint);
-            alert(`Erro ao cadastrar: ${error.message}\n\nVerifique o console para mais detalhes.`);
+            console.error('Código do erro:', error.code);
+            console.error('Mensagem:', error.message);
+            console.error('Detalhes:', error.details);
+            console.error('Hint:', error.hint);
+            
+            let mensagemErro = 'Erro ao cadastrar usuário.';
+            
+            if (error.code === '23505') {
+                mensagemErro = 'Este email já está cadastrado!';
+            } else if (error.code === '42501') {
+                mensagemErro = 'Erro de permissão. Verifique as políticas RLS no Supabase.';
+            } else if (error.message) {
+                mensagemErro = error.message;
+            }
+            
+            alert(`${mensagemErro}\n\nAbra o console (F12) para mais detalhes.`);
             return;
         }
         
