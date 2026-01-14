@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#4CAF50">
+    <title>Treino Academy - Área do Aluno</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="icon" type="image/png" href="icon-192.png">
+</head>
+<body>
+    <div class="dashboard-container">
+        <header class="dashboard-header">
+            <div class="header-content">
+                <h1>💪 Treino Academy</h1>
+                <div class="user-info">
+                    <button class="vincular-btn" id="vincularProfessorBtn">
+                        <span id="professorVinculado">🎓 Vincular Professor</span>
+                    </button>
+                    <span class="user-name">Olá, Aluno</span>
+                    <button class="logout-btn" id="logoutBtn">Sair</button>
+                </div>
+            </div>
+        </header>
+
+        <nav class="tabs">
+            <button class="tab-btn active" data-tab="treinos">
+                📋 Treinos
+            </button>
+            <button class="tab-btn" data-tab="grafico">
+                📊 Gráfico de Desempenho
+            </button>
+        </nav>
+
+        <main class="dashboard-content">
+            <!-- Aba Treinos -->
+            <div class="tab-content active" id="treinos">
+                <div class="content-header">
+                    <h2>Meus Treinos</h2>
+                    <button class="btn btn-primary btn-small">+ Novo Treino</button>
+                </div>
+
+                <div class="treinos-list">
+                    <div class="empty-state">
+                        <span class="empty-icon">📋</span>
+                        <h3>Nenhum treino cadastrado</h3>
+                        <p>Comece criando seu primeiro treino ou aguarde seu professor atribuir um.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Aba Gráfico de Desempenho -->
+            <div class="tab-content" id="grafico">
+                <div class="content-header">
+                    <h2>Gráfico de Desempenho</h2>
+                    <select class="period-select">
+                        <option value="7">Últimos 7 dias</option>
+                        <option value="30">Últimos 30 dias</option>
+                        <option value="90">Últimos 90 dias</option>
+                    </select>
+                </div>
+
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <div class="stat-icon">🏋️</div>
+                        <div class="stat-info">
+                            <span class="stat-label">Treinos Realizados</span>
+                            <span class="stat-value">0</span>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon">🔥</div>
+                        <div class="stat-info">
+                            <span class="stat-label">Sequência Atual</span>
+                            <span class="stat-value">0 dias</span>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon">⏱️</div>
+                        <div class="stat-info">
+                            <span class="stat-label">Tempo Total</span>
+                            <span class="stat-value">0h</span>
+                        </div>
+                    </div>
+
+                    <div class="stat-card">
+                        <div class="stat-icon">💪</div>
+                        <div class="stat-info">
+                            <span class="stat-label">Exercícios Feitos</span>
+                            <span class="stat-value">0</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="chart-container">
+                    <h3>Evolução Semanal</h3>
+                    <div class="empty-state">
+                        <span class="empty-icon">📈</span>
+                        <p>Realize treinos para ver seu progresso aqui</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Modal de Vincular Professor -->
+    <div class="modal" id="modalProfessores">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3>Selecione um Professor</h3>
+                <button class="close-modal" id="closeModalProfessores">&times;</button>
+            </div>
+            <div class="modal-body">
+                <input type="search" class="search-input" id="searchProfessor" placeholder="Buscar professor...">
+                <div class="professores-list" id="professoresList">
+                    <!-- Lista de professores será inserida aqui -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="dashboard-aluno.js"></script>
+</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#4CAF50">
+    <meta name="description" content="Sistema de Cadastro de Treinos de Academia">
+    <title>Treino Academy - Login</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" type="image/png" href="icon-192.png">
+</head>
+<body>
+    <div class="container">
+        <div class="login-card">
+            <div class="logo">
+                <h1>💪 Treino Academy</h1>
+                <p>Gerenciamento de Treinos</p>
+            </div>
+
+            <div class="user-type-selector">
+                <button class="type-btn active" data-type="aluno">
+                    👤 Aluno
+                </button>
+                <button class="type-btn" data-type="professor">
+                    🎓 Professor
+                </button>
+            </div>
+
+            <form id="loginForm" class="login-form">
+                <div class="form-group">
+                    <label for="email">E-mail</label>
+                    <input type="email" id="email" name="email" placeholder="seu@email.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="senha">Senha</label>
+                    <input type="password" id="senha" name="senha" placeholder="Digite sua senha" required>
+                </div>
+
+                <button type="submit" class="btn btn-primary">
+                    Entrar
+                </button>
+
+                <button type="button" class="btn btn-secondary" id="cadastroBtn">
+                    Cadastrar-se
+                </button>
+
+                <button type="button" class="btn btn-demo" id="demoBtn">
+                    🎮 Modo Demo
+                </button>
+
+                <a href="#" class="forgot-password">Esqueceu a senha?</a>
+            </form>
+        </div>
+    </div>
+
+    <div class="install-prompt" id="installPrompt" style="display: none;">
+        <p>Instalar Treino Academy como aplicativo?</p>
+        <button id="installBtn">Instalar</button>
+        <button id="dismissBtn">Agora não</button>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

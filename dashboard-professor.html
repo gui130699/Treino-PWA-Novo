@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#4CAF50">
+    <title>Treino Academy - Área do Professor</title>
+    <link rel="manifest" href="manifest.json">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="icon" type="image/png" href="icon-192.png">
+</head>
+<body>
+    <div class="dashboard-container">
+        <header class="dashboard-header">
+            <div class="header-content">
+                <h1>💪 Treino Academy</h1>
+                <div class="user-info">
+                    <span class="user-name">Olá, Professor</span>
+                    <button class="logout-btn" id="logoutBtn">Sair</button>
+                </div>
+            </div>
+        </header>
+
+        <nav class="tabs">
+            <button class="tab-btn active" data-tab="alunos">
+                👥 Alunos
+            </button>
+            <button class="tab-btn" data-tab="solicitacoes">
+                📬 Solicitações <span class="badge" id="badgeSolicitacoes">0</span>
+            </button>
+            <button class="tab-btn" data-tab="exercicios">
+                📚 Lista de Exercícios
+            </button>
+        </nav>
+
+        <main class="dashboard-content">
+            <!-- Aba Alunos -->
+            <div class="tab-content active" id="alunos">
+                <div class="content-header">
+                    <h2>Meus Alunos</h2>
+                    <div class="header-actions">
+                        <input type="search" class="search-input" placeholder="Buscar aluno...">
+                        <button class="btn btn-primary btn-small">+ Adicionar Aluno</button>
+                    </div>
+                </div>
+
+                <div class="alunos-list">
+                    <div class="empty-state">
+                        <span class="empty-icon">👥</span>
+                        <h3>Nenhum aluno cadastrado</h3>
+                        <p>Adicione alunos para começar a gerenciar seus treinos.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Aba Solicitações -->
+            <div class="tab-content" id="solicitacoes">
+                <div class="content-header">
+                    <h2>Solicitações de Vínculo</h2>
+                </div>
+
+                <div class="solicitacoes-list" id="solicitacoesList">
+                    <div class="empty-state">
+                        <span class="empty-icon">📬</span>
+                        <h3>Nenhuma solicitação pendente</h3>
+                        <p>Quando alunos solicitarem vínculo, aparecerão aqui.</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Aba Lista de Exercícios -->
+            <div class="tab-content" id="exercicios">
+                <div class="content-header">
+                    <h2>Lista de Exercícios</h2>
+                    <div class="header-actions">
+                        <select class="filter-select">
+                            <option value="todos">Todos os grupos</option>
+                            <option value="peito">Peito</option>
+                            <option value="costas">Costas</option>
+                            <option value="pernas">Pernas</option>
+                            <option value="ombros">Ombros</option>
+                            <option value="bracos">Braços</option>
+                            <option value="abdomen">Abdômen</option>
+                        </select>
+                        <button class="btn btn-primary btn-small">+ Novo Exercício</button>
+                    </div>
+                </div>
+
+                <div class="exercicios-list">
+                    <div class="empty-state">
+                        <span class="empty-icon">📚</span>
+                        <h3>Nenhum exercício cadastrado</h3>
+                        <p>Crie sua lista de exercícios para montar treinos personalizados.</p>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="dashboard-professor.js"></script>
+</body>
+</html>
