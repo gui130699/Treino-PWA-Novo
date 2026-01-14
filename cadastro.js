@@ -75,14 +75,21 @@ document.getElementById('cadastroForm').addEventListener('submit', async functio
         return;
     }
     
+    // Verificar se o Supabase está carregado
+    if (!window.supabase) {
+        alert('Aguarde o carregamento do sistema...');
+        setTimeout(() => location.reload(), 1000);
+        return;
+    }
+    
     // Coletar dados do formulário
     const dados = {
         tipo: tipoUsuario,
         nome_completo: document.getElementById('nomeCompleto').value,
-        data_nascimento: document.getElementById('dataNascimento').value,
-        idade: parseInt(document.getElementById('idade').value),
-        peso: parseFloat(document.getElementById('peso').value),
-        altura: parseFloat(document.getElementById('altura').value),
+        data_nascimento: document.getElementById('dataNascimento').value || null,
+        idade: parseInt(document.getElementById('idade').value) || null,
+        peso: parseFloat(document.getElementById('peso').value) || null,
+        altura: parseFloat(document.getElementById('altura').value) || null,
         email: document.getElementById('email').value,
         senha: senha
     };
@@ -92,15 +99,21 @@ document.getElementById('cadastroForm').addEventListener('submit', async functio
         dados.cref = document.getElementById('cref').value;
     }
     
-    console.log('Dados do cadastro:', dados);
+    console.log('📝 Dados do cadastro:', dados);
+    console.log('🔌 Supabase cliente:', supabase);
     
     try {
         // Verificar se email já existe
-        const { data: usuarioExistente } = await supabase
+        console.log('🔍 Verificando email existente...');
+        const { data: usuarioExistente, error: erroCheck } = await supabase
             .from('usuarios')
             .select('email')
             .eq('email', dados.email)
-            .single();
+            .maybeSingle();
+        
+        if (erroCheck) {
+            console.error('❌ Erro ao verificar email:', erroCheck);
+        }
         
         if (usuarioExistente) {
             alert('Este email já está cadastrado!');
@@ -108,6 +121,7 @@ document.getElementById('cadastroForm').addEventListener('submit', async functio
         }
         
         // Inserir no Supabase
+        console.log('💾 Inserindo usuário no Supabase...');
         const { data: novoUsuario, error } = await supabase
             .from('usuarios')
             .insert([dados])
@@ -115,12 +129,13 @@ document.getElementById('cadastroForm').addEventListener('submit', async functio
             .single();
         
         if (error) {
-            console.error('Erro ao cadastrar:', error);
-            alert('Erro ao cadastrar. Tente novamente.');
+            console.error('❌ Erro ao cadastrar:', error);
+            console.error('Detalhes:', error.message, error.details, error.hint);
+            alert(`Erro ao cadastrar: ${error.message}\n\nVerifique o console para mais detalhes.`);
             return;
         }
         
-        console.log('Usuário cadastrado:', novoUsuario);
+        console.log('✅ Usuário cadastrado com sucesso:', novoUsuario);
         
         alert(`Cadastro de ${tipoUsuario} realizado com sucesso!\n\nNome: ${dados.nome_completo}\nEmail: ${dados.email}`);
         
@@ -135,8 +150,8 @@ document.getElementById('cadastroForm').addEventListener('submit', async functio
         }
         
     } catch (error) {
-        console.error('Erro no cadastro:', error);
-        alert('Erro ao cadastrar. Tente novamente.');
+        console.error('❌ Erro no cadastro:', error);
+        alert(`Erro ao cadastrar: ${error.message}\n\nAbra o console (F12) para mais detalhes.`);
     }
 });
 
