@@ -25,7 +25,7 @@ document.querySelectorAll('.type-btn').forEach(btn => {
 });
 
 // Form de Login
-document.getElementById('loginForm').addEventListener('submit', function(e) {
+document.getElementById('loginForm').addEventListener('submit', async function(e) {
     e.preventDefault();
     
     const email = document.getElementById('email').value;
@@ -36,14 +36,39 @@ document.getElementById('loginForm').addEventListener('submit', function(e) {
         email: email
     });
     
-    // Simulação de login (aqui você implementará a lógica real)
-    if (email && senha) {
+    try {
+        // Buscar usuário no Supabase
+        const { data: usuario, error } = await supabase
+            .from('usuarios')
+            .select('*')
+            .eq('email', email)
+            .eq('tipo', tipoUsuario)
+            .single();
+        
+        if (error || !usuario) {
+            alert('Usuário não encontrado ou tipo incorreto!');
+            return;
+        }
+        
+        // Validar senha (em produção use bcrypt)
+        if (usuario.senha !== senha) {
+            alert('Senha incorreta!');
+            return;
+        }
+        
+        // Salvar usuário no localStorage
+        localStorage.setItem('usuarioLogado', JSON.stringify(usuario));
+        
         // Redirecionar para o dashboard apropriado
         if (tipoUsuario === 'aluno') {
             window.location.href = 'dashboard-aluno.html';
         } else {
             window.location.href = 'dashboard-professor.html';
         }
+        
+    } catch (error) {
+        console.error('Erro no login:', error);
+        alert('Erro ao fazer login. Tente novamente.');
     }
 });
 

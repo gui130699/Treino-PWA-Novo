@@ -64,7 +64,7 @@ document.getElementById('senha').addEventListener('input', function() {
 });
 
 // Submit do formulário
-document.getElementById('cadastroForm').addEventListener('submit', function(e) {
+document.getElementById('cadastroForm').addEventListener('submit', async function(e) {
     e.preventDefault();
     
     const senha = document.getElementById('senha').value;
@@ -78,11 +78,11 @@ document.getElementById('cadastroForm').addEventListener('submit', function(e) {
     // Coletar dados do formulário
     const dados = {
         tipo: tipoUsuario,
-        nomeCompleto: document.getElementById('nomeCompleto').value,
-        dataNascimento: document.getElementById('dataNascimento').value,
-        idade: document.getElementById('idade').value,
-        peso: document.getElementById('peso').value,
-        altura: document.getElementById('altura').value,
+        nome_completo: document.getElementById('nomeCompleto').value,
+        data_nascimento: document.getElementById('dataNascimento').value,
+        idade: parseInt(document.getElementById('idade').value),
+        peso: parseFloat(document.getElementById('peso').value),
+        altura: parseFloat(document.getElementById('altura').value),
         email: document.getElementById('email').value,
         senha: senha
     };
@@ -94,16 +94,49 @@ document.getElementById('cadastroForm').addEventListener('submit', function(e) {
     
     console.log('Dados do cadastro:', dados);
     
-    // Aqui você implementaria a lógica de salvar no banco de dados
-    // Por enquanto, apenas mostra os dados e simula sucesso
-    
-    alert(`Cadastro de ${tipoUsuario} realizado com sucesso!\n\nNome: ${dados.nomeCompleto}\nEmail: ${dados.email}`);
-    
-    // Redirecionar para o dashboard apropriado após cadastro
-    if (tipoUsuario === 'aluno') {
-        window.location.href = 'dashboard-aluno.html';
-    } else {
-        window.location.href = 'dashboard-professor.html';
+    try {
+        // Verificar se email já existe
+        const { data: usuarioExistente } = await supabase
+            .from('usuarios')
+            .select('email')
+            .eq('email', dados.email)
+            .single();
+        
+        if (usuarioExistente) {
+            alert('Este email já está cadastrado!');
+            return;
+        }
+        
+        // Inserir no Supabase
+        const { data: novoUsuario, error } = await supabase
+            .from('usuarios')
+            .insert([dados])
+            .select()
+            .single();
+        
+        if (error) {
+            console.error('Erro ao cadastrar:', error);
+            alert('Erro ao cadastrar. Tente novamente.');
+            return;
+        }
+        
+        console.log('Usuário cadastrado:', novoUsuario);
+        
+        alert(`Cadastro de ${tipoUsuario} realizado com sucesso!\n\nNome: ${dados.nome_completo}\nEmail: ${dados.email}`);
+        
+        // Salvar usuário no localStorage
+        localStorage.setItem('usuarioLogado', JSON.stringify(novoUsuario));
+        
+        // Redirecionar para o dashboard apropriado após cadastro
+        if (tipoUsuario === 'aluno') {
+            window.location.href = 'dashboard-aluno.html';
+        } else {
+            window.location.href = 'dashboard-professor.html';
+        }
+        
+    } catch (error) {
+        console.error('Erro no cadastro:', error);
+        alert('Erro ao cadastrar. Tente novamente.');
     }
 });
 
