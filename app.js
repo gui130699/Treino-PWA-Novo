@@ -51,7 +51,21 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
             .eq('tipo', tipoUsuario)
             .single();
         
-        if (error || !usuario) {
+        // Verificar erros específicos
+        if (error) {
+            console.error('Erro Supabase:', error);
+            
+            // Se for erro 401, significa que as políticas RLS não estão configuradas
+            if (error.code === 'PGRST301' || error.message.includes('policy')) {
+                alert('⚠️ Banco de dados não configurado!\n\nAs políticas de segurança precisam ser aplicadas no Supabase.\n\nUse o "Modo Demo" para testar o aplicativo.');
+                return;
+            }
+            
+            alert('Usuário não encontrado ou tipo incorreto!');
+            return;
+        }
+        
+        if (!usuario) {
             alert('Usuário não encontrado ou tipo incorreto!');
             return;
         }
