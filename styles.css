@@ -182,48 +182,22 @@ body {
     color: var(--primary-color);
 }
 
-.install-prompt {
-    position: fixed;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    background: var(--card-bg);
-    padding: 20px;
-    border-radius: 10px;
-    box-shadow: var(--shadow);
-    display: flex;
-    gap: 10px;
-    align-items: center;
-    animation: slideUp 0.5s ease-out;
-}
-
-@keyframes slideUp {
-    from {
-        opacity: 0;
-        transform: translate(-50%, 20px);
-    }
-    to {
-        opacity: 1;
-        transform: translate(-50%, 0);
-    }
-}
-
-.install-prompt button {
-    padding: 10px 20px;
-    border: none;
-    border-radius: 5px;
-    cursor: pointer;
-    font-weight: 500;
-}
-
-.install-prompt #installBtn {
-    background: var(--primary-color);
+.btn-install {
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
+    border: none;
+    margin-top: 10px;
+    animation: slideIn 0.5s ease-out;
 }
 
-.install-prompt #dismissBtn {
-    background: #ddd;
-    color: var(--text-color);
+.btn-install:hover {
+    background: linear-gradient(135deg, #764ba2 0%, #667eea 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(102, 126, 234, 0.4);
+}
+
+.btn-install:active {
+    transform: translateY(0);
 }
 
 @media (max-width: 480px) {

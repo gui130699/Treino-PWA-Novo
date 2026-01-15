@@ -97,32 +97,85 @@ document.getElementById('demoBtn').addEventListener('click', function() {
 
 // PWA Install Prompt
 let deferredPrompt;
+const installBtn = document.getElementById('installAppBtn');
 
+// Função para verificar se o app está instalado
+function isAppInstalled() {
+    // Verifica se está em standalone mode (instalado)
+    if (window.matchMedia('(display-mode: standalone)').matches) {
+        return true;
+    }
+    
+    // Verifica se foi instalado anteriormente (iOS)
+    if (window.navigator.standalone === true) {
+        return true;
+    }
+    
+    // Verifica localStorage
+    if (localStorage.getItem('pwaInstalled') === 'true') {
+        return true;
+    }
+    
+    return false;
+}
+
+// Verificar ao carregar a página
+window.addEventListener('load', () => {
+    if (isAppInstalled()) {
+        console.log('App já está instalado');
+        if (installBtn) {
+            installBtn.style.display = 'none';
+        }
+    }
+});
+
+// Capturar evento de instalação disponível
 window.addEventListener('beforeinstallprompt', (e) => {
     e.preventDefault();
     deferredPrompt = e;
     
-    // Mostrar o prompt de instalação personalizado
-    const installPrompt = document.getElementById('installPrompt');
-    installPrompt.style.display = 'flex';
-});
-
-document.getElementById('installBtn').addEventListener('click', async () => {
-    if (deferredPrompt) {
-        deferredPrompt.prompt();
-        const { outcome } = await deferredPrompt.userChoice;
-        console.log(`Resultado da instalação: ${outcome}`);
-        deferredPrompt = null;
-        document.getElementById('installPrompt').style.display = 'none';
+    // Só mostrar o botão se o app não estiver instalado
+    if (!isAppInstalled() && installBtn) {
+        installBtn.style.display = 'block';
+        console.log('Botão de instalação exibido');
     }
 });
 
-document.getElementById('dismissBtn').addEventListener('click', () => {
-    document.getElementById('installPrompt').style.display = 'none';
-});
+// Evento de clique no botão de instalação
+if (installBtn) {
+    installBtn.addEventListener('click', async () => {
+        if (!deferredPrompt) {
+            console.log('Prompt de instalação não disponível');
+            return;
+        }
+        
+        // Mostrar o prompt nativo de instalação
+        deferredPrompt.prompt();
+        
+        // Aguardar escolha do usuário
+        const { outcome } = await deferredPrompt.userChoice;
+        console.log(`Resultado da instalação: ${outcome}`);
+        
+        if (outcome === 'accepted') {
+            console.log('Usuário aceitou a instalação');
+            // Marcar como instalado
+            localStorage.setItem('pwaInstalled', 'true');
+            // Ocultar botão
+            installBtn.style.display = 'none';
+        }
+        
+        // Limpar o prompt
+        deferredPrompt = null;
+    });
+}
 
-// Verificar se já está instalado
+// Evento disparado quando o app é instalado
 window.addEventListener('appinstalled', () => {
     console.log('PWA instalado com sucesso!');
-    document.getElementById('installPrompt').style.display = 'none';
+    // Marcar como instalado
+    localStorage.setItem('pwaInstalled', 'true');
+    // Ocultar botão
+    if (installBtn) {
+        installBtn.style.display = 'none';
+    }
 });
