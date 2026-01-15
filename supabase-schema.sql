@@ -105,13 +105,27 @@ CREATE INDEX IF NOT EXISTS idx_execucoes_treino_data ON execucoes_treino(data_ex
 -- POLICIES DE SEGURANÇA (RLS - Row Level Security)
 -- ============================================
 
+-- OPÇÃO 1: DESABILITAR RLS TEMPORARIAMENTE (MAIS FÁCIL PARA DESENVOLVIMENTO)
+-- Descomente estas linhas para desabilitar RLS completamente:
+/*
+ALTER TABLE usuarios DISABLE ROW LEVEL SECURITY;
+ALTER TABLE vinculos DISABLE ROW LEVEL SECURITY;
+ALTER TABLE exercicios DISABLE ROW LEVEL SECURITY;
+ALTER TABLE treinos DISABLE ROW LEVEL SECURITY;
+ALTER TABLE treino_exercicios DISABLE ROW LEVEL SECURITY;
+ALTER TABLE execucoes_treino DISABLE ROW LEVEL SECURITY;
+*/
+
+-- OPÇÃO 2: USAR POLÍTICAS PERMISSIVAS (RECOMENDADO)
 -- REMOVER POLICIES ANTIGAS (se existirem)
 DROP POLICY IF EXISTS "Permitir leitura de usuários" ON usuarios;
 DROP POLICY IF EXISTS "Permitir inserção de usuários" ON usuarios;
 DROP POLICY IF EXISTS "Permitir atualização próprio usuário" ON usuarios;
+DROP POLICY IF EXISTS "Permitir exclusão de usuários" ON usuarios;
 DROP POLICY IF EXISTS "Permitir leitura de vínculos" ON vinculos;
 DROP POLICY IF EXISTS "Permitir criação de vínculos" ON vinculos;
 DROP POLICY IF EXISTS "Permitir atualização de vínculos" ON vinculos;
+DROP POLICY IF EXISTS "Permitir exclusão de vínculos" ON vinculos;
 DROP POLICY IF EXISTS "Permitir leitura de exercícios" ON exercicios;
 DROP POLICY IF EXISTS "Permitir criação de exercícios" ON exercicios;
 DROP POLICY IF EXISTS "Permitir atualização de exercícios" ON exercicios;
@@ -126,6 +140,8 @@ DROP POLICY IF EXISTS "Permitir atualização de treino_exercicios" ON treino_ex
 DROP POLICY IF EXISTS "Permitir exclusão de treino_exercicios" ON treino_exercicios;
 DROP POLICY IF EXISTS "Permitir leitura de execuções" ON execucoes_treino;
 DROP POLICY IF EXISTS "Permitir criação de execuções" ON execucoes_treino;
+DROP POLICY IF EXISTS "Permitir atualização de execuções" ON execucoes_treino;
+DROP POLICY IF EXISTS "Permitir exclusão de execuções" ON execucoes_treino;
 
 -- Habilitar RLS nas tabelas
 ALTER TABLE usuarios ENABLE ROW LEVEL SECURITY;
@@ -135,41 +151,23 @@ ALTER TABLE treinos ENABLE ROW LEVEL SECURITY;
 ALTER TABLE treino_exercicios ENABLE ROW LEVEL SECURITY;
 ALTER TABLE execucoes_treino ENABLE ROW LEVEL SECURITY;
 
--- Policies para USUARIOS (permitir tudo publicamente)
-CREATE POLICY "Permitir leitura de usuários" ON usuarios FOR SELECT USING (true);
-CREATE POLICY "Permitir inserção de usuários" ON usuarios FOR INSERT WITH CHECK (true);
-CREATE POLICY "Permitir atualização próprio usuário" ON usuarios FOR UPDATE USING (true);
-CREATE POLICY "Permitir exclusão de usuários" ON usuarios FOR DELETE USING (true);
+-- Policies para USUARIOS (permitir tudo para usuários anônimos)
+CREATE POLICY "Permitir tudo em usuários" ON usuarios FOR ALL USING (true) WITH CHECK (true);
 
 -- Policies para VÍNCULOS
-CREATE POLICY "Permitir leitura de vínculos" ON vinculos FOR SELECT USING (true);
-CREATE POLICY "Permitir criação de vínculos" ON vinculos FOR INSERT WITH CHECK (true);
-CREATE POLICY "Permitir atualização de vínculos" ON vinculos FOR UPDATE USING (true);
-CREATE POLICY "Permitir exclusão de vínculos" ON vinculos FOR DELETE USING (true);
+CREATE POLICY "Permitir tudo em vínculos" ON vinculos FOR ALL USING (true) WITH CHECK (true);
 
 -- Policies para EXERCÍCIOS
-CREATE POLICY "Permitir leitura de exercícios" ON exercicios FOR SELECT USING (true);
-CREATE POLICY "Permitir criação de exercícios" ON exercicios FOR INSERT WITH CHECK (true);
-CREATE POLICY "Permitir atualização de exercícios" ON exercicios FOR UPDATE USING (true);
-CREATE POLICY "Permitir exclusão de exercícios" ON exercicios FOR DELETE USING (true);
+CREATE POLICY "Permitir tudo em exercícios" ON exercicios FOR ALL USING (true) WITH CHECK (true);
 
 -- Policies para TREINOS
-CREATE POLICY "Permitir leitura de treinos" ON treinos FOR SELECT USING (true);
-CREATE POLICY "Permitir criação de treinos" ON treinos FOR INSERT WITH CHECK (true);
-CREATE POLICY "Permitir atualização de treinos" ON treinos FOR UPDATE USING (true);
-CREATE POLICY "Permitir exclusão de treinos" ON treinos FOR DELETE USING (true);
+CREATE POLICY "Permitir tudo em treinos" ON treinos FOR ALL USING (true) WITH CHECK (true);
 
 -- Policies para TREINO_EXERCICIOS
-CREATE POLICY "Permitir leitura de treino_exercicios" ON treino_exercicios FOR SELECT USING (true);
-CREATE POLICY "Permitir criação de treino_exercicios" ON treino_exercicios FOR INSERT WITH CHECK (true);
-CREATE POLICY "Permitir atualização de treino_exercicios" ON treino_exercicios FOR UPDATE USING (true);
-CREATE POLICY "Permitir exclusão de treino_exercicios" ON treino_exercicios FOR DELETE USING (true);
+CREATE POLICY "Permitir tudo em treino_exercicios" ON treino_exercicios FOR ALL USING (true) WITH CHECK (true);
 
 -- Policies para EXECUÇÕES DE TREINO
-CREATE POLICY "Permitir leitura de execuções" ON execucoes_treino FOR SELECT USING (true);
-CREATE POLICY "Permitir criação de execuções" ON execucoes_treino FOR INSERT WITH CHECK (true);
-CREATE POLICY "Permitir atualização de execuções" ON execucoes_treino FOR UPDATE USING (true);
-CREATE POLICY "Permitir exclusão de execuções" ON execucoes_treino FOR DELETE USING (true);
+CREATE POLICY "Permitir tudo em execucoes_treino" ON execucoes_treino FOR ALL USING (true) WITH CHECK (true);
 
 -- ============================================
 -- DADOS DE EXEMPLO (Opcional - para testes)
