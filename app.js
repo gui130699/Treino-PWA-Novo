@@ -36,8 +36,8 @@ document.getElementById('loginForm').addEventListener('submit', async function(e
         email: email
     });
     
-    // Verificar se o Supabase está carregado
-    if (!window.supabase || !window.supabase.from) {
+    // Verificar se o Supabase está disponível
+    if (!window.supabase) {
         alert('Sistema ainda carregando... Aguarde e tente novamente.');
         return;
     }
