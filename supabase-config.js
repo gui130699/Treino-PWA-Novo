@@ -1,4 +1,4 @@
-// Configuração do Supabase
+// Configuração do Supabase - Novo formato de chaves
 const SUPABASE_URL = 'https://bshcttzscofsnysiuaro.supabase.co';
 const SUPABASE_ANON_KEY = 'sb_publishable_c8kMhX2Y4gtPwjJ53SUdcw_tvDCCGYw';
 
@@ -8,10 +8,17 @@ let supabaseClient = null;
 // Esperar o Supabase SDK carregar
 function initSupabase() {
     if (typeof supabase !== 'undefined' && supabase.createClient) {
-        supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        // Criar cliente com as novas chaves publicáveis
+        supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY, {
+            auth: {
+                persistSession: false,
+                autoRefreshToken: false
+            }
+        });
         window.supabase = supabaseClient;
         console.log('✅ Supabase conectado:', SUPABASE_URL);
         console.log('✅ Cliente Supabase pronto');
+        console.log('✅ Usando novas chaves publicáveis');
         return true;
     }
     return false;

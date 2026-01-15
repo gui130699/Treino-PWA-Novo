@@ -1,0 +1,245 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Teste Final - Novas Chaves Supabase</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .container { max-width: 800px; margin: 0 auto; }
+        h1 {
+            color: white;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: bold;
+            margin: 10px 5px;
+            width: 100%;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+        }
+        button:hover { transform: translateY(-2px); }
+        .result {
+            background: #f8f9fa;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            padding: 20px;
+            margin-top: 20px;
+            white-space: pre-wrap;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .result.success { border-color: #4caf50; background: #e8f5e9; }
+        .result.error { border-color: #f44336; background: #ffebee; }
+        .status { 
+            padding: 10px 20px;
+            border-radius: 20px;
+            font-weight: bold;
+            display: inline-block;
+            margin: 10px 0;
+        }
+        .status.success { background: #4caf50; color: white; }
+        .status.error { background: #f44336; color: white; }
+        .status.pending { background: #ff9800; color: white; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🧪 Teste Final - Novas Chaves</h1>
+        
+        <div class="card">
+            <h2>Teste de Cadastro Completo</h2>
+            <p>Este teste vai:</p>
+            <ul style="margin: 15px 0 15px 30px; line-height: 2;">
+                <li>✅ Conectar com as novas chaves publicáveis</li>
+                <li>✅ Criar um usuário de teste</li>
+                <li>✅ Verificar se foi salvo no banco</li>
+            </ul>
+            
+            <button onclick="testarCadastroCompleto()">🚀 TESTAR CADASTRO AGORA</button>
+            
+            <div id="resultado"></div>
+        </div>
+        
+        <div class="card">
+            <h3>📋 Informações do Projeto</h3>
+            <p><strong>URL:</strong> https://bshcttzscofsnysiuaro.supabase.co</p>
+            <p><strong>Chave:</strong> sb_publishable_c8kMhX2Y4gtPwjJ53SUdcw_tvDCCGYw</p>
+            <p><strong>Tabela:</strong> usuarios</p>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2.39.0/dist/umd/supabase.min.js"></script>
+    <script>
+        const SUPABASE_URL = 'https://bshcttzscofsnysiuaro.supabase.co';
+        const SUPABASE_KEY = 'sb_publishable_c8kMhX2Y4gtPwjJ53SUdcw_tvDCCGYw';
+        
+        let client = null;
+        
+        function mostrarResultado(mensagem, tipo) {
+            const div = document.getElementById('resultado');
+            div.className = `result ${tipo}`;
+            div.textContent = mensagem;
+        }
+        
+        async function testarCadastroCompleto() {
+            const btn = event.target;
+            btn.disabled = true;
+            btn.textContent = '⏳ Testando...';
+            
+            try {
+                // 1. Criar cliente
+                mostrarResultado('🔄 Passo 1/4: Criando cliente Supabase...', '');
+                await new Promise(r => setTimeout(r, 500));
+                
+                if (typeof supabase === 'undefined') {
+                    throw new Error('SDK do Supabase não carregado!');
+                }
+                
+                client = supabase.createClient(SUPABASE_URL, SUPABASE_KEY, {
+                    auth: {
+                        persistSession: false,
+                        autoRefreshToken: false
+                    },
+                    db: {
+                        schema: 'public'
+                    }
+                });
+                
+                mostrarResultado('✅ Passo 1/4: Cliente criado com sucesso!\n\n🔄 Passo 2/4: Verificando tabela usuarios...', 'success');
+                await new Promise(r => setTimeout(r, 500));
+                
+                // 2. Verificar tabela
+                const { data: testRead, error: errorRead } = await client
+                    .from('usuarios')
+                    .select('id')
+                    .limit(1);
+                
+                if (errorRead) {
+                    throw new Error(`Erro ao acessar tabela: ${errorRead.message}\n\nCódigo: ${errorRead.code}\nDetalhes: ${errorRead.details || 'N/A'}\nHint: ${errorRead.hint || 'N/A'}`);
+                }
+                
+                mostrarResultado('✅ Passo 2/4: Tabela acessível!\n\n🔄 Passo 3/4: Criando usuário de teste...', 'success');
+                await new Promise(r => setTimeout(r, 500));
+                
+                // 3. Criar usuário
+                const timestamp = Date.now();
+                const dadosTeste = {
+                    tipo: 'aluno',
+                    nome_completo: 'Teste Final Completo',
+                    email: `teste_final_${timestamp}@teste.com`,
+                    senha: 'senha123456',
+                    data_nascimento: '2000-01-15',
+                    idade: 26,
+                    peso: 75.0,
+                    altura: 175.0
+                };
+                
+                const { data: novoUsuario, error: errorInsert } = await client
+                    .from('usuarios')
+                    .insert([dadosTeste])
+                    .select()
+                    .single();
+                
+                if (errorInsert) {
+                    throw new Error(`Erro ao inserir usuário: ${errorInsert.message}\n\nCódigo: ${errorInsert.code}\nDetalhes: ${errorInsert.details || 'N/A'}\nHint: ${errorInsert.hint || 'N/A'}\n\nDados enviados:\n${JSON.stringify(dadosTeste, null, 2)}`);
+                }
+                
+                mostrarResultado('✅ Passo 3/4: Usuário criado!\n\n🔄 Passo 4/4: Verificando se foi salvo...', 'success');
+                await new Promise(r => setTimeout(r, 500));
+                
+                // 4. Verificar se foi salvo
+                const { data: usuarioSalvo, error: errorCheck } = await client
+                    .from('usuarios')
+                    .select('*')
+                    .eq('id', novoUsuario.id)
+                    .single();
+                
+                if (errorCheck || !usuarioSalvo) {
+                    throw new Error('Usuário não foi encontrado após inserção!');
+                }
+                
+                // SUCESSO!
+                mostrarResultado(`🎉 TESTE 100% CONCLUÍDO COM SUCESSO! 🎉
+
+✅ Passo 1: Cliente criado
+✅ Passo 2: Tabela acessível
+✅ Passo 3: Usuário inserido
+✅ Passo 4: Dados confirmados
+
+📊 DADOS DO USUÁRIO CRIADO:
+━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
+ID: ${usuarioSalvo.id}
+Nome: ${usuarioSalvo.nome_completo}
+Email: ${usuarioSalvo.email}
+Tipo: ${usuarioSalvo.tipo}
+Idade: ${usuarioSalvo.idade} anos
+Peso: ${usuarioSalvo.peso} kg
+Altura: ${usuarioSalvo.altura} cm
+Data de cadastro: ${new Date(usuarioSalvo.created_at).toLocaleString('pt-BR')}
+
+🎯 O SISTEMA ESTÁ FUNCIONANDO PERFEITAMENTE!
+
+Agora você pode usar o cadastro normalmente.
+Teste em: cadastro.html`, 'success');
+                
+                btn.textContent = '✅ TESTE CONCLUÍDO!';
+                btn.style.background = '#4caf50';
+                
+            } catch (error) {
+                mostrarResultado(`❌ ERRO NO TESTE:
+
+${error.message}
+
+📋 STACK TRACE:
+${error.stack || 'Não disponível'}
+
+🔧 POSSÍVEIS SOLUÇÕES:
+
+1. ERRO DE PERMISSÃO (42501):
+   - Execute o SQL de políticas RLS no Supabase
+   - Settings → SQL Editor → Cole o código do supabase-schema.sql
+
+2. ERRO DE TABELA (42P01):
+   - A tabela 'usuarios' não existe
+   - Execute o SQL completo no SQL Editor
+
+3. ERRO DE CONEXÃO:
+   - Verifique se as credenciais estão corretas
+   - Verifique sua conexão com a internet
+
+4. ERRO DE FETCH:
+   - O projeto pode estar pausado/suspenso
+   - Acesse o dashboard e verifique o status`, 'error');
+                
+                btn.textContent = '❌ TESTE FALHOU - Tente Novamente';
+                btn.disabled = false;
+            }
+        }
+    </script>
+</body>
+</html>
