@@ -75,8 +75,8 @@ document.getElementById('cadastroForm').addEventListener('submit', async functio
         return;
     }
     
-    // Verificar se o Supabase está carregado
-    if (!window.supabase || !window.supabase.from) {
+    // Verificar se o Supabase está disponível
+    if (!window.supabase) {
         alert('Sistema ainda carregando... Aguarde e tente novamente.');
         console.error('Supabase não inicializado:', window.supabase);
         return;
