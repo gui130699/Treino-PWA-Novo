@@ -2,8 +2,8 @@
 
 ## 🔑 Credenciais
 
-- **URL**: https://cjzdegocrrjoknrulhnp.supabase.co
-- **Anon Key**: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNqemRlZ29jcnJqb2tucnVsaG5wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzY4NTY1NTMsImV4cCI6MjA1MjQzMjU1M30.ydeYdhKoXOR25p62RRmkMQ_rXeY2c9z4xVEi_RdQT3E
+- **URL**: https://bshcttzscofsnysiuaro.supabase.co
+- **Anon Key**: sb_publishable_c8kMhX2Y4gtPwjJ53SUdcw_tvDCCGYw
 
 ## 📋 Como Criar as Tabelas
 

@@ -1,0 +1,390 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔧 Corrigir Credenciais do Supabase</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+        h1 {
+            color: white;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        .step {
+            background: #f8f9fa;
+            border-left: 5px solid #f5576c;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .step h3 {
+            color: #f5576c;
+            margin-bottom: 15px;
+            font-size: 1.3em;
+        }
+        button {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: bold;
+            margin: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: transform 0.2s;
+            display: block;
+            width: 100%;
+        }
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+        .input-group {
+            margin: 20px 0;
+        }
+        .input-group label {
+            display: block;
+            font-weight: bold;
+            margin-bottom: 8px;
+            color: #333;
+        }
+        .input-group input, .input-group textarea {
+            width: 100%;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            font-size: 14px;
+            font-family: 'Courier New', monospace;
+            transition: border-color 0.3s;
+        }
+        .input-group input:focus, .input-group textarea:focus {
+            outline: none;
+            border-color: #f5576c;
+        }
+        .input-group textarea {
+            min-height: 100px;
+            resize: vertical;
+        }
+        .alert {
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+        }
+        .alert-danger {
+            background: #ffebee;
+            border-left: 5px solid #f44336;
+            color: #c62828;
+        }
+        .alert-success {
+            background: #e8f5e9;
+            border-left: 5px solid #4caf50;
+            color: #2e7d32;
+        }
+        .alert-info {
+            background: #e3f2fd;
+            border-left: 5px solid #2196f3;
+            color: #1565c0;
+        }
+        code {
+            background: #263238;
+            color: #aed581;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+            font-size: 0.95em;
+        }
+        .link-button {
+            background: #2196f3;
+            color: white;
+            text-decoration: none;
+            padding: 12px 24px;
+            border-radius: 8px;
+            display: inline-block;
+            margin: 10px 0;
+            font-weight: bold;
+            transition: background 0.3s;
+        }
+        .link-button:hover {
+            background: #1976d2;
+        }
+        .success-message {
+            display: none;
+            text-align: center;
+            padding: 30px;
+        }
+        .success-message h2 {
+            color: #4caf50;
+            margin-bottom: 20px;
+        }
+        img {
+            max-width: 100%;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            margin: 15px 0;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔧 Corrigir Credenciais do Supabase</h1>
+        
+        <div class="card">
+            <div class="alert alert-danger">
+                <h3>❌ Problema Identificado</h3>
+                <p><strong>Sua API Key do Supabase está INVÁLIDA ou EXPIRADA!</strong></p>
+                <p>Erro: <code>Invalid API key</code></p>
+                <p>Siga os passos abaixo para obter as credenciais corretas.</p>
+            </div>
+            
+            <div class="step">
+                <h3>📋 PASSO 1: Acessar o Dashboard do Supabase</h3>
+                <p>Clique no botão abaixo para abrir o dashboard do seu projeto:</p>
+                <a href="https://supabase.com/dashboard/project/cjzdegocrrjoknrulhnp/settings/api" 
+                   target="_blank" 
+                   class="link-button">
+                    🔗 Abrir Dashboard do Supabase
+                </a>
+                <p style="margin-top: 15px;">
+                    <small>Ou copie este link: <code>https://supabase.com/dashboard/project/cjzdegocrrjoknrulhnp/settings/api</code></small>
+                </p>
+            </div>
+            
+            <div class="step">
+                <h3>📋 PASSO 2: Copiar as Credenciais</h3>
+                <p>No dashboard do Supabase, você verá uma página com as configurações da API.</p>
+                <p><strong>Copie os seguintes valores:</strong></p>
+                <ul style="margin: 15px 0 15px 30px; line-height: 1.8;">
+                    <li><strong>Project URL</strong> - algo como: <code>https://xxxxx.supabase.co</code></li>
+                    <li><strong>anon public</strong> key - um token JWT longo começando com <code>eyJ...</code></li>
+                </ul>
+                
+                <div class="alert alert-info">
+                    <p><strong>💡 Dica:</strong> Na página de configurações da API, procure por:</p>
+                    <ul style="margin: 10px 0 10px 30px;">
+                        <li>"Project URL" ou "URL"</li>
+                        <li>"Project API keys" → <strong>anon</strong> <code>public</code></li>
+                    </ul>
+                </div>
+            </div>
+            
+            <div class="step">
+                <h3>📋 PASSO 3: Cole as Credenciais Aqui</h3>
+                
+                <div class="input-group">
+                    <label>🌐 Project URL (Supabase URL)</label>
+                    <input type="text" 
+                           id="supabaseUrl" 
+                           placeholder="https://xxxxxxxxxxxxx.supabase.co"
+                           value="https://cjzdegocrrjoknrulhnp.supabase.co">
+                    <small>Exemplo: https://abcdefgh.supabase.co</small>
+                </div>
+                
+                <div class="input-group">
+                    <label>🔑 Anon Key (API Key Pública)</label>
+                    <textarea id="supabaseKey" 
+                              placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..."></textarea>
+                    <small>Um token JWT longo começando com eyJ... (geralmente 200+ caracteres)</small>
+                </div>
+                
+                <button onclick="gerarArquivosAtualizados()">
+                    ✅ GERAR ARQUIVOS CORRIGIDOS
+                </button>
+            </div>
+            
+            <div id="resultado" style="display: none;">
+                <div class="alert alert-success">
+                    <h3>✅ Arquivos Gerados com Sucesso!</h3>
+                    <p>Copie os códigos abaixo e substitua nos arquivos correspondentes:</p>
+                </div>
+                
+                <div class="step">
+                    <h3>📄 Código para: supabase-config.js</h3>
+                    <textarea id="codigoConfig" readonly style="min-height: 200px; font-size: 12px;"></textarea>
+                    <button onclick="copiarCodigo('codigoConfig')" style="background: #4caf50;">
+                        📋 Copiar Código
+                    </button>
+                </div>
+                
+                <div class="step">
+                    <h3>📄 Código para: SUPABASE-SETUP.md</h3>
+                    <textarea id="codigoSetup" readonly style="min-height: 150px; font-size: 12px;"></textarea>
+                    <button onclick="copiarCodigo('codigoSetup')" style="background: #4caf50;">
+                        📋 Copiar Código
+                    </button>
+                </div>
+                
+                <div class="alert alert-info">
+                    <h3>📝 Próximos Passos:</h3>
+                    <ol style="margin: 15px 0 0 30px; line-height: 2;">
+                        <li>Copie o código do <code>supabase-config.js</code> acima</li>
+                        <li>Abra o arquivo <code>supabase-config.js</code> no VS Code</li>
+                        <li>Substitua TODO o conteúdo pelo código copiado</li>
+                        <li>Salve o arquivo (Ctrl + S)</li>
+                        <li>Volte ao <code>diagnostico-completo.html</code> e rode novamente</li>
+                    </ol>
+                </div>
+            </div>
+        </div>
+        
+        <div class="card" style="background: #263238; color: white;">
+            <h3 style="color: #aed581; margin-bottom: 15px;">❓ Não consegue acessar o Supabase?</h3>
+            <p style="line-height: 1.8;">Se você não consegue acessar o dashboard do Supabase ou não tem mais acesso ao projeto:</p>
+            <ol style="margin: 15px 0 15px 30px; line-height: 2;">
+                <li>Crie um novo projeto em: <a href="https://supabase.com/dashboard" target="_blank" style="color: #aed581;">supabase.com/dashboard</a></li>
+                <li>Copie as novas credenciais</li>
+                <li>Execute o script SQL do arquivo <code>supabase-schema.sql</code> no SQL Editor</li>
+                <li>Cole as novas credenciais aqui nesta página</li>
+            </ol>
+        </div>
+    </div>
+
+    <script>
+        function gerarArquivosAtualizados() {
+            const url = document.getElementById('supabaseUrl').value.trim();
+            const key = document.getElementById('supabaseKey').value.trim();
+            
+            // Validações
+            if (!url) {
+                alert('⚠️ Por favor, cole a URL do Supabase!');
+                return;
+            }
+            
+            if (!key) {
+                alert('⚠️ Por favor, cole a Anon Key do Supabase!');
+                return;
+            }
+            
+            if (!url.includes('supabase.co')) {
+                alert('⚠️ A URL parece incorreta. Deve conter "supabase.co"');
+                return;
+            }
+            
+            if (!key.startsWith('eyJ')) {
+                alert('⚠️ A Anon Key parece incorreta. Deve começar com "eyJ"');
+                return;
+            }
+            
+            if (key.length < 100) {
+                alert('⚠️ A Anon Key parece muito curta. Copie o valor completo do dashboard.');
+                return;
+            }
+            
+            // Gerar código do supabase-config.js
+            const codigoConfig = `// Configuração do Supabase
+const SUPABASE_URL = '${url}';
+const SUPABASE_ANON_KEY = '${key}';
+
+// Inicializar o cliente Supabase assim que o SDK estiver carregado
+let supabaseClient = null;
+
+// Esperar o Supabase SDK carregar
+function initSupabase() {
+    if (typeof supabase !== 'undefined' && supabase.createClient) {
+        supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        window.supabase = supabaseClient;
+        console.log('✅ Supabase conectado:', SUPABASE_URL);
+        console.log('✅ Cliente Supabase pronto');
+        return true;
+    }
+    return false;
+}
+
+// Tentar inicializar imediatamente
+if (!initSupabase()) {
+    // Se não funcionou, esperar o DOM carregar
+    document.addEventListener('DOMContentLoaded', () => {
+        if (!initSupabase()) {
+            console.error('❌ Supabase SDK não carregado');
+        }
+    });
+}`;
+            
+            // Gerar código do SUPABASE-SETUP.md (apenas parte das credenciais)
+            const projectRef = url.match(/https:\/\/([^.]+)\.supabase\.co/)[1];
+            const codigoSetup = `# Configuração do Banco de Dados Supabase
+
+## 🔑 Credenciais
+
+- **URL**: ${url}
+- **Anon Key**: ${key}
+
+## 📋 Como Criar as Tabelas
+
+1. Acesse: https://supabase.com/dashboard/project/${projectRef}/editor
+2. Vá em **SQL Editor** (menu lateral esquerdo)
+3. Clique em **New Query**
+4. Copie e cole todo o conteúdo do arquivo \`supabase-schema.sql\`
+5. Clique em **Run** (Ctrl + Enter)
+
+## ⚠️ Não esqueça de configurar as Políticas RLS!
+
+Execute este SQL no SQL Editor do Supabase:
+
+\`\`\`sql
+ALTER TABLE usuarios ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "Permitir leitura pública" ON usuarios
+FOR SELECT USING (true);
+
+CREATE POLICY "Permitir inserção pública" ON usuarios
+FOR INSERT WITH CHECK (true);
+
+CREATE POLICY "Permitir atualização própria" ON usuarios
+FOR UPDATE USING (true);
+
+CREATE POLICY "Permitir exclusão própria" ON usuarios
+FOR DELETE USING (true);
+\`\`\``;
+            
+            // Mostrar resultados
+            document.getElementById('codigoConfig').value = codigoConfig;
+            document.getElementById('codigoSetup').value = codigoSetup;
+            document.getElementById('resultado').style.display = 'block';
+            
+            // Scroll suave até o resultado
+            document.getElementById('resultado').scrollIntoView({ behavior: 'smooth', block: 'start' });
+            
+            alert('✅ Códigos gerados com sucesso!\n\nAgora copie e cole nos arquivos correspondentes.');
+        }
+        
+        function copiarCodigo(id) {
+            const textarea = document.getElementById(id);
+            textarea.select();
+            document.execCommand('copy');
+            
+            const btn = event.target;
+            const textoOriginal = btn.textContent;
+            btn.textContent = '✅ Copiado!';
+            btn.style.background = '#2196f3';
+            
+            setTimeout(() => {
+                btn.textContent = textoOriginal;
+                btn.style.background = '#4caf50';
+            }, 2000);
+        }
+    </script>
+</body>
+</html>

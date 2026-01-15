@@ -1,0 +1,221 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🚀 Criar Novo Projeto Supabase</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .container { max-width: 900px; margin: 0 auto; }
+        h1 {
+            color: white;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        .step {
+            background: #f8f9fa;
+            border-left: 5px solid #11998e;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .step h3 {
+            color: #11998e;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+        .btn {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 18px;
+            font-weight: bold;
+            margin: 10px 0;
+            text-decoration: none;
+            display: inline-block;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: transform 0.2s;
+        }
+        .btn:hover {
+            transform: translateY(-2px);
+        }
+        .alert {
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 5px solid;
+        }
+        .alert-success {
+            background: #d4edda;
+            border-color: #28a745;
+            color: #155724;
+        }
+        .alert-info {
+            background: #d1ecf1;
+            border-color: #17a2b8;
+            color: #0c5460;
+        }
+        code {
+            background: #263238;
+            color: #aed581;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+        }
+        ul, ol {
+            margin: 15px 0 15px 30px;
+            line-height: 2;
+        }
+        .number {
+            background: #11998e;
+            color: white;
+            width: 35px;
+            height: 35px;
+            border-radius: 50%;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🚀 Criar Novo Projeto Supabase</h1>
+        
+        <div class="card">
+            <div class="alert alert-info">
+                <h3>💡 Por que criar um novo projeto?</h3>
+                <p>Você está tendo dificuldade para encontrar as chaves corretas no projeto atual. Criar um novo projeto leva apenas 2 minutos e garante que teremos as credenciais certas!</p>
+            </div>
+            
+            <div class="step">
+                <h3><span class="number">1</span> Acessar o Supabase</h3>
+                <p>Clique no botão abaixo para abrir o dashboard do Supabase:</p>
+                <a href="https://supabase.com/dashboard" target="_blank" class="btn">
+                    🌐 Abrir Supabase Dashboard
+                </a>
+                <p style="margin-top: 15px;"><small>Faça login com sua conta (Google, GitHub, etc.)</small></p>
+            </div>
+            
+            <div class="step">
+                <h3><span class="number">2</span> Criar Novo Projeto</h3>
+                <ol>
+                    <li>Clique no botão <strong>"New project"</strong> (verde, no canto superior direito)</li>
+                    <li>Escolha sua organização (ou crie uma se for seu primeiro projeto)</li>
+                    <li>Preencha os dados:
+                        <ul style="margin-top: 10px;">
+                            <li><strong>Name:</strong> TreinoAcademy (ou qualquer nome)</li>
+                            <li><strong>Database Password:</strong> Crie uma senha forte (guarde ela!)</li>
+                            <li><strong>Region:</strong> Escolha South America (São Paulo) se disponível</li>
+                        </ul>
+                    </li>
+                    <li>Clique em <strong>"Create new project"</strong></li>
+                    <li>⏳ Aguarde 1-2 minutos enquanto o projeto é criado</li>
+                </ol>
+            </div>
+            
+            <div class="step">
+                <h3><span class="number">3</span> Copiar as Credenciais</h3>
+                <p>Quando o projeto estiver pronto:</p>
+                <ol>
+                    <li>No menu lateral, clique em <strong>⚙️ Settings</strong></li>
+                    <li>Clique em <strong>API</strong></li>
+                    <li>Você verá:
+                        <div style="background: #f8f9fa; padding: 15px; margin: 15px 0; border-radius: 8px;">
+                            <p><strong>Project URL</strong></p>
+                            <code>https://xxxxxxxxx.supabase.co</code>
+                            <p style="margin-top: 15px;"><strong>anon public</strong></p>
+                            <code>eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...</code>
+                        </div>
+                    </li>
+                    <li>Copie AMBOS os valores (a URL e a chave anon)</li>
+                </ol>
+            </div>
+            
+            <div class="step">
+                <h3><span class="number">4</span> Criar as Tabelas</h3>
+                <p>Agora vamos criar as tabelas do banco de dados:</p>
+                <ol>
+                    <li>No menu lateral, clique em <strong>📝 SQL Editor</strong></li>
+                    <li>Clique em <strong>"New query"</strong></li>
+                    <li>Abra o arquivo <code>supabase-schema.sql</code> do seu projeto</li>
+                    <li>Copie TODO o conteúdo do arquivo</li>
+                    <li>Cole no SQL Editor do Supabase</li>
+                    <li>Clique em <strong>"Run"</strong> (ou Ctrl + Enter)</li>
+                    <li>✅ Você verá "Success. No rows returned"</li>
+                </ol>
+            </div>
+            
+            <div class="step">
+                <h3><span class="number">5</span> Configurar Permissões (RLS)</h3>
+                <p>Ainda no SQL Editor, crie uma nova query e cole este código:</p>
+                <div style="background: #263238; color: #aed581; padding: 15px; margin: 15px 0; border-radius: 8px; overflow-x: auto; font-family: 'Courier New', monospace; font-size: 13px;">
+ALTER TABLE usuarios ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "Permitir leitura pública" ON usuarios
+FOR SELECT USING (true);
+
+CREATE POLICY "Permitir inserção pública" ON usuarios
+FOR INSERT WITH CHECK (true);
+
+CREATE POLICY "Permitir atualização própria" ON usuarios
+FOR UPDATE USING (true);
+
+-- Fazer o mesmo para as outras tabelas
+ALTER TABLE vinculos ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "Permitir tudo em vinculos" ON vinculos FOR ALL USING (true);
+
+ALTER TABLE exercicios ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "Permitir tudo em exercicios" ON exercicios FOR ALL USING (true);
+
+ALTER TABLE treinos ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "Permitir tudo em treinos" ON treinos FOR ALL USING (true);
+
+ALTER TABLE treino_exercicios ENABLE ROW LEVEL SECURITY;
+CREATE POLICY "Permitir tudo em treino_exercicios" ON treino_exercicios FOR ALL USING (true);
+                </div>
+                <p>Clique em <strong>"Run"</strong></p>
+            </div>
+            
+            <div class="alert alert-success">
+                <h3>✅ Pronto!</h3>
+                <p><strong>Agora me envie:</strong></p>
+                <ol>
+                    <li>A URL do projeto (https://xxxxx.supabase.co)</li>
+                    <li>A chave anon (começa com eyJ...)</li>
+                </ol>
+                <p style="margin-top: 15px;">Formato:</p>
+                <div style="background: white; padding: 10px; margin: 10px 0; border-radius: 5px; font-family: monospace;">
+URL: https://xxxxx.supabase.co<br>
+ANON KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+                </div>
+            </div>
+        </div>
+        
+        <div class="card" style="background: #fff3cd; border-left: 5px solid #ffc107;">
+            <h3>❓ Precisa de Ajuda?</h3>
+            <p>Se tiver qualquer dúvida durante o processo, me avise em qual passo você está e eu te ajudo!</p>
+        </div>
+    </div>
+</body>
+</html>

@@ -1,0 +1,515 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diagnóstico Completo - Supabase</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        h1 {
+            color: white;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        .test-section {
+            background: white;
+            border-radius: 15px;
+            padding: 25px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        .test-section h2 {
+            color: #667eea;
+            margin-bottom: 15px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .status {
+            display: inline-block;
+            padding: 5px 12px;
+            border-radius: 20px;
+            font-size: 0.85em;
+            font-weight: bold;
+        }
+        .status.pending { background: #ffc107; color: #000; }
+        .status.success { background: #4caf50; color: white; }
+        .status.error { background: #f44336; color: white; }
+        .status.warning { background: #ff9800; color: white; }
+        
+        button {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            margin: 5px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            transition: transform 0.2s;
+        }
+        button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(0,0,0,0.3);
+        }
+        button:disabled {
+            opacity: 0.5;
+            cursor: not-allowed;
+        }
+        
+        .result-box {
+            background: #f8f9fa;
+            border: 2px solid #dee2e6;
+            border-radius: 8px;
+            padding: 15px;
+            margin-top: 15px;
+            white-space: pre-wrap;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+        .result-box.success { border-color: #4caf50; background: #e8f5e9; }
+        .result-box.error { border-color: #f44336; background: #ffebee; }
+        
+        .step-list {
+            list-style: none;
+            padding-left: 0;
+        }
+        .step-list li {
+            padding: 10px;
+            margin: 5px 0;
+            background: #f8f9fa;
+            border-left: 4px solid #dee2e6;
+            border-radius: 4px;
+        }
+        .step-list li.done {
+            background: #e8f5e9;
+            border-left-color: #4caf50;
+        }
+        .step-list li.error {
+            background: #ffebee;
+            border-left-color: #f44336;
+        }
+        
+        .info-card {
+            background: #e3f2fd;
+            border-left: 4px solid #2196f3;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+        .warning-card {
+            background: #fff3e0;
+            border-left: 4px solid #ff9800;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 4px;
+        }
+        
+        code {
+            background: #263238;
+            color: #aed581;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Courier New', monospace;
+        }
+        
+        .sql-box {
+            background: #263238;
+            color: #aed581;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 15px 0;
+            overflow-x: auto;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔬 Diagnóstico Completo do Sistema</h1>
+        
+        <!-- Teste 1: SDK -->
+        <div class="test-section">
+            <h2>
+                <span>1️⃣ SDK do Supabase</span>
+                <span class="status pending" id="status1">Aguardando</span>
+            </h2>
+            <p>Verificando se o SDK do Supabase foi carregado corretamente.</p>
+            <button onclick="teste1()">Testar SDK</button>
+            <div id="result1" class="result-box" style="display:none;"></div>
+        </div>
+        
+        <!-- Teste 2: Cliente -->
+        <div class="test-section">
+            <h2>
+                <span>2️⃣ Criação do Cliente</span>
+                <span class="status pending" id="status2">Aguardando</span>
+            </h2>
+            <p>Criando cliente Supabase e verificando conexão.</p>
+            <button onclick="teste2()">Criar Cliente</button>
+            <div id="result2" class="result-box" style="display:none;"></div>
+        </div>
+        
+        <!-- Teste 3: Tabela -->
+        <div class="test-section">
+            <h2>
+                <span>3️⃣ Verificar Tabela</span>
+                <span class="status pending" id="status3">Aguardando</span>
+            </h2>
+            <p>Verificando se a tabela 'usuarios' existe e está acessível.</p>
+            <button onclick="teste3()">Verificar Tabela</button>
+            <div id="result3" class="result-box" style="display:none;"></div>
+        </div>
+        
+        <!-- Teste 4: Políticas RLS -->
+        <div class="test-section">
+            <h2>
+                <span>4️⃣ Políticas RLS</span>
+                <span class="status pending" id="status4">Aguardando</span>
+            </h2>
+            <p>Testando permissões de leitura e escrita (Row Level Security).</p>
+            <button onclick="teste4()">Testar Permissões</button>
+            <div id="result4" class="result-box" style="display:none;"></div>
+        </div>
+        
+        <!-- Teste 5: Inserção Real -->
+        <div class="test-section">
+            <h2>
+                <span>5️⃣ Teste de Cadastro</span>
+                <span class="status pending" id="status5">Aguardando</span>
+            </h2>
+            <p>Simulando cadastro real de usuário com todos os campos.</p>
+            <button onclick="teste5()">Testar Cadastro</button>
+            <div id="result5" class="result-box" style="display:none;"></div>
+        </div>
+        
+        <!-- Resultado Final -->
+        <div class="test-section" id="diagnostico-final" style="display:none;">
+            <h2>📊 Diagnóstico Final</h2>
+            <div id="resultado-final"></div>
+        </div>
+        
+        <!-- Botão para rodar tudo -->
+        <div style="text-align: center; margin: 30px 0;">
+            <button onclick="rodarTodosDiagnosticos()" style="font-size: 18px; padding: 15px 40px;">
+                🚀 RODAR DIAGNÓSTICO COMPLETO
+            </button>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script>
+        const SUPABASE_URL = 'https://cjzdegocrrjoknrulhnp.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNqemRlZ29jcnJqb2tucnVsaG5wIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzY4NTY1NTMsImV4cCI6MjA1MjQzMjU1M30.ydeYdhKoXOR25p62RRmkMQ_rXeY2c9z4xVEi_RdQT3E';
+        
+        let client = null;
+        let resultados = [];
+        
+        function mostrarResultado(id, texto, tipo, status) {
+            const resultBox = document.getElementById(`result${id}`);
+            const statusBox = document.getElementById(`status${id}`);
+            
+            resultBox.style.display = 'block';
+            resultBox.className = `result-box ${tipo}`;
+            resultBox.textContent = texto;
+            
+            statusBox.className = `status ${status}`;
+            statusBox.textContent = status === 'success' ? '✅ Passou' : status === 'error' ? '❌ Falhou' : '⚠️ Aviso';
+            
+            resultados[id-1] = { passou: status === 'success', mensagem: texto };
+        }
+        
+        async function teste1() {
+            console.log('=== TESTE 1: SDK ===');
+            try {
+                if (typeof supabase === 'undefined') {
+                    mostrarResultado(1, '❌ PROBLEMA IDENTIFICADO:\nO SDK do Supabase não foi carregado!\n\nCAUSAS POSSÍVEIS:\n1. Problema de conexão com a internet\n2. CDN bloqueado\n3. Extensão de navegador bloqueando\n\nSOLUÇÃO:\n- Verifique sua conexão\n- Desabilite extensões (AdBlock, etc)\n- Tente outro navegador', 'error', 'error');
+                    return false;
+                }
+                
+                if (typeof supabase.createClient !== 'function') {
+                    mostrarResultado(1, '❌ SDK carregado mas createClient não disponível!\n\nVersão do SDK pode estar incorreta.', 'error', 'error');
+                    return false;
+                }
+                
+                mostrarResultado(1, `✅ SDK CARREGADO COM SUCESSO!\n\nVersão disponível: ${typeof supabase}\nMétodo createClient: Disponível\nGlobal supabase: ${typeof window.supabase}\n\nTudo OK! Pode prosseguir para o próximo teste.`, 'success', 'success');
+                return true;
+                
+            } catch (error) {
+                mostrarResultado(1, `❌ ERRO INESPERADO:\n${error.message}\n\nStack:\n${error.stack}`, 'error', 'error');
+                return false;
+            }
+        }
+        
+        async function teste2() {
+            console.log('=== TESTE 2: CLIENTE ===');
+            try {
+                if (typeof supabase === 'undefined') {
+                    mostrarResultado(2, '❌ Execute o Teste 1 primeiro!', 'error', 'error');
+                    return false;
+                }
+                
+                client = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+                
+                if (!client) {
+                    mostrarResultado(2, '❌ Cliente não foi criado!', 'error', 'error');
+                    return false;
+                }
+                
+                // Verificar métodos essenciais
+                const metodos = ['from', 'auth', 'storage', 'functions'];
+                const metodosDisponiveis = metodos.filter(m => typeof client[m] === 'function');
+                
+                if (metodosDisponiveis.length !== metodos.length) {
+                    mostrarResultado(2, `⚠️ Cliente criado mas alguns métodos faltando:\n\nDisponíveis: ${metodosDisponiveis.join(', ')}\nFaltando: ${metodos.filter(m => !metodosDisponiveis.includes(m)).join(', ')}`, 'error', 'warning');
+                    return false;
+                }
+                
+                mostrarResultado(2, `✅ CLIENTE CRIADO COM SUCESSO!\n\nURL: ${SUPABASE_URL}\nMétodos disponíveis: ${metodosDisponiveis.join(', ')}\nTipo do cliente: ${typeof client}\n\nCliente pronto para usar!`, 'success', 'success');
+                return true;
+                
+            } catch (error) {
+                mostrarResultado(2, `❌ ERRO AO CRIAR CLIENTE:\n${error.message}\n\nVerifique as credenciais do Supabase.`, 'error', 'error');
+                return false;
+            }
+        }
+        
+        async function teste3() {
+            console.log('=== TESTE 3: TABELA ===');
+            try {
+                if (!client) {
+                    mostrarResultado(3, '❌ Execute o Teste 2 primeiro!', 'error', 'error');
+                    return false;
+                }
+                
+                // Tentar acessar a tabela
+                const { data, error, count } = await client
+                    .from('usuarios')
+                    .select('*', { count: 'exact', head: true });
+                
+                if (error) {
+                    let mensagem = `❌ PROBLEMA IDENTIFICADO:\n\nCódigo: ${error.code}\nMensagem: ${error.message}\n`;
+                    
+                    if (error.code === '42P01') {
+                        mensagem += `\n🔧 SOLUÇÃO:\nA tabela 'usuarios' NÃO EXISTE!\n\n1. Acesse: https://supabase.com/dashboard/project/cjzdegocrrjoknrulhnp/editor\n2. Vá em SQL Editor\n3. Execute o script do arquivo 'supabase-schema.sql'`;
+                    } else if (error.code === '42501' || error.message.includes('permission')) {
+                        mensagem += `\n🔧 SOLUÇÃO:\nProblema de PERMISSÃO (RLS)!\n\nVá para o Teste 4 para corrigir.`;
+                    } else {
+                        mensagem += `\nDetalhes: ${error.details}\nHint: ${error.hint}`;
+                    }
+                    
+                    mostrarResultado(3, mensagem, 'error', 'error');
+                    return false;
+                }
+                
+                mostrarResultado(3, `✅ TABELA ENCONTRADA!\n\nTabela 'usuarios' existe e está acessível.\nRegistros encontrados: ${count || 0}\n\nTudo OK!`, 'success', 'success');
+                return true;
+                
+            } catch (error) {
+                mostrarResultado(3, `❌ ERRO INESPERADO:\n${error.message}`, 'error', 'error');
+                return false;
+            }
+        }
+        
+        async function teste4() {
+            console.log('=== TESTE 4: POLÍTICAS RLS ===');
+            try {
+                if (!client) {
+                    mostrarResultado(4, '❌ Execute o Teste 2 primeiro!', 'error', 'error');
+                    return false;
+                }
+                
+                // Teste 4A: Leitura
+                console.log('Testando LEITURA...');
+                const { data: dataRead, error: errorRead } = await client
+                    .from('usuarios')
+                    .select('id')
+                    .limit(1);
+                
+                if (errorRead && errorRead.code === '42501') {
+                    const sqlFix = `-- EXECUTE ISTO NO SUPABASE SQL EDITOR:
+
+ALTER TABLE usuarios ENABLE ROW LEVEL SECURITY;
+
+CREATE POLICY "Permitir leitura pública" ON usuarios
+FOR SELECT USING (true);
+
+CREATE POLICY "Permitir inserção pública" ON usuarios
+FOR INSERT WITH CHECK (true);
+
+CREATE POLICY "Permitir atualização própria" ON usuarios
+FOR UPDATE USING (true);
+
+CREATE POLICY "Permitir exclusão própria" ON usuarios
+FOR DELETE USING (true);`;
+                    
+                    mostrarResultado(4, `❌ PROBLEMA IDENTIFICADO:\nPOLÍTICAS RLS BLOQUEANDO ACESSO!\n\n🔧 SOLUÇÃO DEFINITIVA:\n\n1. Acesse: https://supabase.com/dashboard/project/cjzdegocrrjoknrulhnp/editor\n2. Clique em "SQL Editor" no menu lateral\n3. Cole e execute este código:\n\n${sqlFix}\n\n4. Clique em RUN\n5. Volte aqui e teste novamente`, 'error', 'error');
+                    return false;
+                }
+                
+                // Teste 4B: Inserção
+                console.log('Testando INSERÇÃO...');
+                const emailTeste = `teste_diag_${Date.now()}@teste.com`;
+                const { data: dataInsert, error: errorInsert } = await client
+                    .from('usuarios')
+                    .insert([{
+                        tipo: 'aluno',
+                        nome_completo: 'Teste Diagnóstico',
+                        email: emailTeste,
+                        senha: 'teste123',
+                        data_nascimento: '2000-01-01',
+                        idade: 24,
+                        peso: 70.0,
+                        altura: 170.0
+                    }])
+                    .select()
+                    .single();
+                
+                if (errorInsert) {
+                    mostrarResultado(4, `❌ LEITURA OK, MAS INSERÇÃO FALHOU!\n\nCódigo: ${errorInsert.code}\nMensagem: ${errorInsert.message}\n\nVerifique as políticas RLS para INSERT.`, 'error', 'error');
+                    return false;
+                }
+                
+                // Limpar o teste
+                if (dataInsert && dataInsert.id) {
+                    await client.from('usuarios').delete().eq('id', dataInsert.id);
+                }
+                
+                mostrarResultado(4, `✅ POLÍTICAS RLS CONFIGURADAS CORRETAMENTE!\n\n✅ Leitura: OK\n✅ Inserção: OK\n✅ Registro teste criado e deletado\n\nPermissões estão funcionando perfeitamente!`, 'success', 'success');
+                return true;
+                
+            } catch (error) {
+                mostrarResultado(4, `❌ ERRO:\n${error.message}`, 'error', 'error');
+                return false;
+            }
+        }
+        
+        async function teste5() {
+            console.log('=== TESTE 5: CADASTRO COMPLETO ===');
+            try {
+                if (!client) {
+                    mostrarResultado(5, '❌ Execute os testes anteriores primeiro!', 'error', 'error');
+                    return false;
+                }
+                
+                const timestamp = Date.now();
+                const dadosCompletos = {
+                    tipo: 'aluno',
+                    nome_completo: 'Usuário Teste Completo',
+                    email: `teste_completo_${timestamp}@teste.com`,
+                    senha: 'senha123456',
+                    data_nascimento: '1995-05-15',
+                    idade: 28,
+                    peso: 75.5,
+                    altura: 178.0
+                };
+                
+                console.log('Dados a inserir:', dadosCompletos);
+                
+                const { data, error } = await client
+                    .from('usuarios')
+                    .insert([dadosCompletos])
+                    .select()
+                    .single();
+                
+                if (error) {
+                    mostrarResultado(5, `❌ CADASTRO FALHOU!\n\nCódigo: ${error.code}\nMensagem: ${error.message}\nDetalhes: ${error.details}\nHint: ${error.hint}\n\nDados enviados:\n${JSON.stringify(dadosCompletos, null, 2)}`, 'error', 'error');
+                    return false;
+                }
+                
+                mostrarResultado(5, `✅ CADASTRO REALIZADO COM SUCESSO!\n\n🎉 SISTEMA FUNCIONANDO PERFEITAMENTE!\n\nUsuário criado:\nID: ${data.id}\nNome: ${data.nome_completo}\nEmail: ${data.email}\nTipo: ${data.tipo}\nData: ${data.created_at}\n\n✅ Todos os campos foram salvos corretamente no banco!\n\n📝 Dados completos:\n${JSON.stringify(data, null, 2)}`, 'success', 'success');
+                return true;
+                
+            } catch (error) {
+                mostrarResultado(5, `❌ ERRO INESPERADO:\n${error.message}\n\nStack:\n${error.stack}`, 'error', 'error');
+                return false;
+            }
+        }
+        
+        async function rodarTodosDiagnosticos() {
+            const btn = event.target;
+            btn.disabled = true;
+            btn.textContent = '⏳ Executando diagnóstico...';
+            
+            const resultado1 = await teste1();
+            await new Promise(r => setTimeout(r, 500));
+            
+            if (resultado1) {
+                const resultado2 = await teste2();
+                await new Promise(r => setTimeout(r, 500));
+                
+                if (resultado2) {
+                    const resultado3 = await teste3();
+                    await new Promise(r => setTimeout(r, 500));
+                    
+                    if (resultado3) {
+                        const resultado4 = await teste4();
+                        await new Promise(r => setTimeout(r, 500));
+                        
+                        if (resultado4) {
+                            await teste5();
+                        }
+                    }
+                }
+            }
+            
+            // Mostrar diagnóstico final
+            mostrarDiagnosticoFinal();
+            
+            btn.disabled = false;
+            btn.textContent = '🚀 RODAR DIAGNÓSTICO COMPLETO';
+        }
+        
+        function mostrarDiagnosticoFinal() {
+            const div = document.getElementById('diagnostico-final');
+            const resultado = document.getElementById('resultado-final');
+            
+            div.style.display = 'block';
+            
+            const todosPasses = resultados.every(r => r && r.passou);
+            const primeiroErro = resultados.findIndex(r => r && !r.passou);
+            
+            if (todosPasses) {
+                resultado.innerHTML = `
+                    <div class="info-card" style="background: #e8f5e9; border-color: #4caf50;">
+                        <h3 style="color: #2e7d32;">🎉 SISTEMA 100% FUNCIONAL!</h3>
+                        <p>Todos os testes passaram com sucesso.</p>
+                        <p><strong>O cadastro está funcionando perfeitamente!</strong></p>
+                        <p>Se o cadastro.html ainda não funciona, pode ser cache do navegador:</p>
+                        <ul>
+                            <li>Pressione Ctrl + Shift + R para recarregar sem cache</li>
+                            <li>Ou abra o DevTools (F12) → Application → Clear Storage → Clear site data</li>
+                        </ul>
+                    </div>
+                `;
+            } else {
+                resultado.innerHTML = `
+                    <div class="warning-card">
+                        <h3 style="color: #e65100;">⚠️ PROBLEMA ENCONTRADO NO TESTE ${primeiroErro + 1}</h3>
+                        <p><strong>O sistema parou no teste ${primeiroErro + 1}.</strong></p>
+                        <p>Siga as instruções exibidas acima para corrigir o problema.</p>
+                        <p>Depois de corrigir, rode o diagnóstico novamente.</p>
+                    </div>
+                `;
+            }
+            
+            div.scrollIntoView({ behavior: 'smooth' });
+        }
+    </script>
+</body>
+</html>

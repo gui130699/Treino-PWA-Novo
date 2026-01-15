@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎯 Como Pegar as Chaves Corretas</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: Arial, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            padding: 20px;
+            min-height: 100vh;
+        }
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        h1 {
+            color: white;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+        .card {
+            background: white;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 20px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+        }
+        .alert {
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            border-left: 5px solid;
+        }
+        .alert-danger {
+            background: #ffebee;
+            border-color: #f44336;
+            color: #c62828;
+        }
+        .alert-success {
+            background: #e8f5e9;
+            border-color: #4caf50;
+            color: #2e7d32;
+        }
+        .alert-warning {
+            background: #fff3e0;
+            border-color: #ff9800;
+            color: #e65100;
+        }
+        .step {
+            background: #f8f9fa;
+            border-left: 5px solid #2196f3;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 5px;
+        }
+        .step h3 {
+            color: #1976d2;
+            margin-bottom: 15px;
+        }
+        img {
+            max-width: 100%;
+            border: 3px solid #2196f3;
+            border-radius: 8px;
+            margin: 15px 0;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        code {
+            background: #263238;
+            color: #aed581;
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-family: 'Courier New', monospace;
+        }
+        .code-example {
+            background: #f5f5f5;
+            border: 2px dashed #2196f3;
+            padding: 15px;
+            margin: 15px 0;
+            border-radius: 8px;
+            font-family: 'Courier New', monospace;
+            font-size: 12px;
+            overflow-x: auto;
+        }
+        .correct {
+            color: #4caf50;
+            font-weight: bold;
+        }
+        .wrong {
+            color: #f44336;
+            font-weight: bold;
+            text-decoration: line-through;
+        }
+        button, .btn {
+            background: #2196f3;
+            color: white;
+            border: none;
+            padding: 15px 30px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            margin: 10px 5px;
+            text-decoration: none;
+            display: inline-block;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.2);
+        }
+        button:hover, .btn:hover {
+            background: #1976d2;
+        }
+        ul, ol {
+            margin: 15px 0 15px 30px;
+            line-height: 2;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🎯 Como Pegar as Chaves Corretas do Supabase</h1>
+        
+        <div class="card">
+            <div class="alert alert-danger">
+                <h3>❌ Chaves Incorretas Detectadas</h3>
+                <p>Você enviou chaves que começam com:</p>
+                <ul>
+                    <li class="wrong">sb_publishable_...</li>
+                    <li class="wrong">sb_secret_...</li>
+                </ul>
+                <p><strong>Essas NÃO são as chaves corretas para o SDK JavaScript!</strong></p>
+            </div>
+            
+            <div class="alert alert-success">
+                <h3>✅ Chave Correta - Exemplo</h3>
+                <p>A chave que você precisa se parece com isso:</p>
+                <div class="code-example">
+                    <span class="correct">eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImFiY2RlZmdoIiwicm9sZSI6ImFub24iLCJpYXQiOjE2ODUxMjM0NTYsImV4cCI6MjAwMDY5OTQ1Nn0.abcdefghijklmnopqrstuvwxyz1234567890</span>
+                </div>
+                <p><strong>Características:</strong></p>
+                <ul>
+                    <li>✅ Começa com <code>eyJ</code></li>
+                    <li>✅ Tem pontos separando 3 partes</li>
+                    <li>✅ É muito longo (200-300 caracteres)</li>
+                    <li>✅ É um token JWT</li>
+                </ul>
+            </div>
+            
+            <div class="step">
+                <h3>📋 PASSO A PASSO - Onde Encontrar</h3>
+                
+                <h4>1️⃣ Acesse o Dashboard</h4>
+                <a href="https://supabase.com/dashboard/project/cjzdegocrrjoknrulhnp/settings/api" 
+                   target="_blank" 
+                   class="btn">
+                    🔗 Abrir Dashboard (Settings → API)
+                </a>
+                
+                <h4 style="margin-top: 20px;">2️⃣ Procure pela seção "Project API keys"</h4>
+                <p>Você verá algo assim:</p>
+                <div style="background: white; padding: 20px; border: 2px solid #ddd; border-radius: 8px; margin: 15px 0;">
+                    <p><strong>Project URL</strong></p>
+                    <div class="code-example" style="border-color: #4caf50;">
+                        https://cjzdegocrrjoknrulhnp.supabase.co
+                    </div>
+                    
+                    <p style="margin-top: 20px;"><strong>Project API keys</strong></p>
+                    
+                    <div style="margin: 10px 0;">
+                        <p style="font-size: 14px; color: #666;">anon <span style="background: #e3f2fd; padding: 2px 8px; border-radius: 4px;">public</span></p>
+                        <div class="code-example" style="border-color: #4caf50;">
+                            eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.ey... ← <span class="correct">COPIE ESTA!</span>
+                        </div>
+                    </div>
+                    
+                    <div style="margin: 10px 0;">
+                        <p style="font-size: 14px; color: #666;">service_role <span style="background: #ffebee; padding: 2px 8px; border-radius: 4px;">secret</span></p>
+                        <div class="code-example">
+                            eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.ey... ← NÃO use esta (é secreta)
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="alert alert-warning">
+                    <p><strong>⚠️ IMPORTANTE:</strong></p>
+                    <ul>
+                        <li>✅ Use a chave <strong>anon</strong> com a tag <code>public</code></li>
+                        <li>❌ NÃO use a chave <strong>service_role</strong> (é secreta e perigosa)</li>
+                        <li>✅ A chave deve começar com <code>eyJ</code></li>
+                    </ul>
+                </div>
+                
+                <h4 style="margin-top: 30px;">3️⃣ Copie TODA a chave</h4>
+                <p>A chave é LONGA! Certifique-se de copiar do início (<code>eyJ</code>) até o final.</p>
+                <p>Geralmente tem entre 200-300 caracteres.</p>
+                
+                <h4 style="margin-top: 30px;">4️⃣ Me envie assim:</h4>
+                <div class="code-example">
+URL: https://cjzdegocrrjoknrulhnp.supabase.co
+ANON KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+                </div>
+            </div>
+            
+            <div class="alert alert-warning">
+                <h3>🤔 Não encontra essas chaves?</h3>
+                <p>Se você não vê chaves que começam com <code>eyJ</code>, pode ser que:</p>
+                <ol>
+                    <li>Você está na página errada do dashboard</li>
+                    <li>O projeto está usando uma versão muito antiga do Supabase</li>
+                    <li>Você não tem permissão para ver as chaves</li>
+                </ol>
+                <p style="margin-top: 15px;"><strong>Solução:</strong> Crie um novo projeto no Supabase e me envie as credenciais dele.</p>
+                <a href="https://supabase.com/dashboard" target="_blank" class="btn">
+                    ➕ Criar Novo Projeto Supabase
+                </a>
+            </div>
+        </div>
+        
+        <div class="card" style="background: #263238; color: white;">
+            <h3 style="color: #aed581;">📱 Alternativa: Tire um Print</h3>
+            <p style="line-height: 1.8; margin: 15px 0;">
+                Se estiver com dificuldade, tire um print (screenshot) da página 
+                <strong>Settings → API</strong> do seu projeto Supabase e me envie.
+                Assim posso ver exatamente o que você está vendo.
+            </p>
+            <p style="color: #ff9800;">
+                ⚠️ Mas NÃO compartilhe prints publicamente - envie só pra mim!
+            </p>
+        </div>
+    </div>
+</body>
+</html>

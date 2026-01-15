@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🔍 Onde Está a Chave Anon</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: Arial, sans-serif;
+            background: #1a1a1a;
+            color: white;
+            padding: 20px;
+        }
+        .container { max-width: 1200px; margin: 0 auto; }
+        h1 {
+            color: #3ecf8e;
+            text-align: center;
+            margin-bottom: 30px;
+            font-size: 2.5em;
+        }
+        .step {
+            background: #2a2a2a;
+            border-radius: 15px;
+            padding: 30px;
+            margin-bottom: 30px;
+            border: 2px solid #3ecf8e;
+        }
+        .step h2 {
+            color: #3ecf8e;
+            margin-bottom: 20px;
+            font-size: 1.8em;
+        }
+        .instruction {
+            background: #1a1a1a;
+            padding: 20px;
+            border-left: 5px solid #3ecf8e;
+            margin: 20px 0;
+            border-radius: 5px;
+            font-size: 1.1em;
+            line-height: 1.8;
+        }
+        .mockup {
+            background: white;
+            color: #1a1a1a;
+            padding: 30px;
+            border-radius: 10px;
+            margin: 20px 0;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+        }
+        .mockup-section {
+            margin: 25px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 8px;
+        }
+        .mockup-label {
+            font-size: 14px;
+            color: #666;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+        .mockup-value {
+            background: #fff;
+            padding: 12px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-family: 'Courier New', monospace;
+            font-size: 13px;
+            word-break: break-all;
+            position: relative;
+        }
+        .tag {
+            display: inline-block;
+            padding: 4px 12px;
+            border-radius: 12px;
+            font-size: 11px;
+            font-weight: bold;
+            margin-left: 10px;
+        }
+        .tag-public {
+            background: #d4edda;
+            color: #155724;
+            border: 1px solid #c3e6cb;
+        }
+        .tag-secret {
+            background: #f8d7da;
+            color: #721c24;
+            border: 1px solid #f5c6cb;
+        }
+        .arrow {
+            color: #3ecf8e;
+            font-size: 2em;
+            font-weight: bold;
+            margin-left: 15px;
+        }
+        .highlight {
+            background: #fff3cd;
+            border: 3px solid #ffc107;
+            animation: pulse 2s infinite;
+        }
+        @keyframes pulse {
+            0%, 100% { border-color: #ffc107; }
+            50% { border-color: #ff6b6b; }
+        }
+        .btn {
+            background: #3ecf8e;
+            color: white;
+            padding: 15px 30px;
+            border: none;
+            border-radius: 8px;
+            font-size: 18px;
+            font-weight: bold;
+            cursor: pointer;
+            text-decoration: none;
+            display: inline-block;
+            margin: 10px 0;
+        }
+        .btn:hover {
+            background: #2eb879;
+        }
+        .menu-item {
+            background: #2a2a2a;
+            padding: 12px 20px;
+            margin: 5px 0;
+            border-radius: 6px;
+            border-left: 4px solid #666;
+        }
+        .menu-item.active {
+            background: #3ecf8e;
+            color: #1a1a1a;
+            border-left-color: #1a1a1a;
+            font-weight: bold;
+        }
+        .alert {
+            background: #ff6b6b;
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            font-size: 1.1em;
+        }
+        .success {
+            background: #3ecf8e;
+            color: #1a1a1a;
+            padding: 20px;
+            border-radius: 8px;
+            margin: 20px 0;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🔍 Onde Está a Chave Anon</h1>
+        
+        <div class="step">
+            <h2>PASSO 1: Acesse o Projeto</h2>
+            <div class="instruction">
+                No dashboard do Supabase, certifique-se de estar no projeto correto:
+                <strong>TreinoAcademy</strong> (ou o nome que você deu)
+            </div>
+            <a href="https://supabase.com/dashboard/project/default" target="_blank" class="btn">
+                🔗 Abrir Meu Projeto
+            </a>
+        </div>
+        
+        <div class="step">
+            <h2>PASSO 2: Ir para Settings → API</h2>
+            
+            <div class="instruction">
+                No menu lateral ESQUERDO, procure por <strong>⚙️ Settings</strong> (geralmente no final da lista)
+            </div>
+            
+            <div style="background: #1a1a1a; padding: 20px; border-radius: 8px; margin: 20px 0;">
+                <p style="color: #666; margin-bottom: 10px;">Menu Lateral:</p>
+                <div class="menu-item">🏠 Home</div>
+                <div class="menu-item">📊 Table Editor</div>
+                <div class="menu-item">📝 SQL Editor</div>
+                <div class="menu-item">🔌 Database</div>
+                <div class="menu-item">👥 Authentication</div>
+                <div class="menu-item">📦 Storage</div>
+                <div class="menu-item active">⚙️ Settings ← CLIQUE AQUI</div>
+            </div>
+            
+            <div class="instruction" style="margin-top: 30px;">
+                Depois de clicar em <strong>Settings</strong>, você verá um SUBMENU. Clique em <strong>API</strong>
+            </div>
+            
+            <div style="background: #1a1a1a; padding: 20px; border-radius: 8px; margin: 20px 0;">
+                <p style="color: #666; margin-bottom: 10px;">Submenu de Settings:</p>
+                <div class="menu-item">General</div>
+                <div class="menu-item active">API ← CLIQUE AQUI</div>
+                <div class="menu-item">Database</div>
+                <div class="menu-item">Auth</div>
+                <div class="menu-item">Storage</div>
+            </div>
+        </div>
+        
+        <div class="step">
+            <h2>PASSO 3: Na Página API</h2>
+            
+            <div class="instruction">
+                Você verá uma página com várias informações. Role a página e procure por estas seções:
+            </div>
+            
+            <div class="mockup">
+                <h3 style="color: #1a1a1a; margin-bottom: 20px;">🌐 Configuration</h3>
+                
+                <div class="mockup-section">
+                    <div class="mockup-label">Project URL</div>
+                    <div class="mockup-value">
+                        https://bshcttzscofsnysiuaro.supabase.co
+                    </div>
+                    <p style="margin-top: 10px; color: #28a745; font-weight: bold;">
+                        ✅ Copie esta URL também
+                    </p>
+                </div>
+                
+                <div class="mockup-section" style="margin-top: 40px;">
+                    <h4 style="margin-bottom: 15px; color: #1a1a1a;">🔑 Project API keys</h4>
+                    
+                    <div style="margin: 20px 0;">
+                        <div class="mockup-label">
+                            anon <span class="tag tag-public">public</span>
+                        </div>
+                        <div class="mockup-value highlight">
+                            eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJzaGN0dHpzY29mc255c2l1YXJvIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MzY5NTI4NzAsImV4cCI6MjA1MjUyODg3MH0.XxXxXxXxXxXxXxXxXxXxXxXxXxXxXxXxXxXxXxXxXxXx
+                            <span class="arrow">← COPIE ESTA CHAVE!</span>
+                        </div>
+                    </div>
+                    
+                    <div style="margin: 20px 0;">
+                        <div class="mockup-label">
+                            service_role <span class="tag tag-secret">secret</span>
+                        </div>
+                        <div class="mockup-value" style="background: #f8d7da; border-color: #f5c6cb;">
+                            eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImJzaGN0dHpzY29mc255c2l1YXJvIiwicm9sZSI6InNlcnZpY2Vfcm9sZSIsImlhdCI6MTczNjk1Mjg3MCwiZXhwIjoyMDUyNTI4ODcwfQ.YyYyYyYyYyYyYyYyYyYyYyYyYyYyYyYyYyYyYyYyYyYy
+                        </div>
+                        <p style="margin-top: 10px; color: #dc3545; font-weight: bold;">
+                            ❌ NÃO use esta (é perigosa e secreta)
+                        </p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="alert">
+                ⚠️ <strong>IMPORTANTE:</strong> Copie a chave que tem a tag <span class="tag tag-public">public</span> ao lado!
+            </div>
+            
+            <div class="success">
+                ✅ A chave correta SEMPRE começa com: <code style="background: white; color: #1a1a1a; padding: 5px 10px; border-radius: 4px;">eyJ</code>
+            </div>
+        </div>
+        
+        <div class="step">
+            <h2>PASSO 4: Link Direto (Mais Fácil)</h2>
+            
+            <div class="instruction">
+                Ou simplesmente clique neste link que já te leva direto para a página certa:
+            </div>
+            
+            <a href="https://supabase.com/dashboard/project/default/settings/api" target="_blank" class="btn" style="font-size: 20px; padding: 20px 40px;">
+                🚀 IR DIRETO PARA A PÁGINA DE API
+            </a>
+            
+            <div class="instruction" style="margin-top: 20px;">
+                Quando a página abrir, role um pouco para baixo até ver <strong>"Project API keys"</strong> e copie a chave <strong>anon</strong>.
+            </div>
+        </div>
+        
+        <div class="step">
+            <h2>📋 Me Envie Assim:</h2>
+            
+            <div style="background: #1a1a1a; padding: 20px; border-radius: 8px; font-family: 'Courier New', monospace; margin: 20px 0;">
+                URL: https://bshcttzscofsnysiuaro.supabase.co<br>
+                ANON KEY: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9...
+            </div>
+            
+            <p style="font-size: 1.1em; line-height: 1.8;">
+                ✅ A URL você já me enviou: <code>https://bshcttzscofsnysiuaro.supabase.co</code><br>
+                ⏳ Só falta a chave anon (que começa com <code>eyJ</code>)
+            </p>
+        </div>
+        
+        <div class="step" style="background: #2a2a2a; border-color: #ff6b6b;">
+            <h2>❓ Ainda Não Encontrou?</h2>
+            
+            <div class="instruction">
+                Se mesmo assim você não está vendo essas chaves:
+            </div>
+            
+            <ol style="font-size: 1.1em; line-height: 2; margin: 20px 0 20px 30px;">
+                <li>Certifique-se de que está LOGADO no Supabase</li>
+                <li>Verifique se está no projeto correto (nome no topo da página)</li>
+                <li>Tente atualizar a página (F5)</li>
+                <li>Se nada funcionar, me diga: "não estou vendo as chaves JWT" e eu te ajudo de outra forma</li>
+            </ol>
+        </div>
+    </div>
+</body>
+</html>
